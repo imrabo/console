@@ -1,0 +1,270 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+    OWNER
+    EDITOR
+    VIEWER
+}
+
+enum SubscriptionStatus {
+    TRIAL
+    ACTIVE
+    INACTIVE
+    CANCELLED
+}
+
+enum PlanType {
+    SOLO
+    TEAM
+}
+
+model User {
+    id                  String    @id @default(auto()) @map("_id") @db.ObjectId
+    email               String    @unique
+    passwordHash        String?
+    name                String?
+    trialStartAt        DateTime?
+    trialEndsAt         DateTime?
+    trialStatus         String?
+    onboardingCompleted Boolean   @default(false)
+    role                UserRole  @default(OWNER)
+    instituteId         String?   @db.ObjectId
+    subject             String?
+    bio                 String?
+    emailVerified       Boolean   @default(false)
+    otpHash             String?
+    otpResendCount      Int       @default(0)
+    otpAttempts         Int       @default(0)
+    lastOtpSentAt       DateTime?
+    otpExpiresAt        DateTime?
+    otpPending          Boolean   @default(false)
+    deletedAt           DateTime?
+    createdAt           DateTime  @default(now())
+    updatedAt           DateTime  @updatedAt
+
+    @@index([instituteId])
+    @@map("users")
+}
+
+model Institute {
+    id                  String    @id @default(auto()) @map("_id") @db.ObjectId
+    name                String?
+    description         String?
+    phone               String?
+    whatsapp            String?
+    address             Address?
+    timings             String?
+    leadWhatsappEnabled Boolean   @default(false)
+    autoReplyEnabled    Boolean   @default(false)
+    logo                String?
+    banner              String?
+    heroImage           String?
+    googleMapLink       String?
+    websiteUrl          String?
+    instagramUrl        String?
+    facebookUrl         String?
+    youtubeUrl          String?
+    linkedinUrl         String?
+    isOnboarded         Boolean   @default(false)
+    slug                String?   @unique
+    deletedAt           DateTime?
+    createdAt           DateTime  @default(now())
+    updatedAt           DateTime  @updatedAt
+
+    @@index([phone])
+    @@map("institutes")
+}
+
+type Address {
+    addressLine1 String?
+    addressLine2 String?
+    city         String?
+    state        String?
+    region       String?
+    postalCode   String?
+    country      String?
+    countryCode  String?
+}
+
+model Subscription {
+    id               String             @id @default(auto()) @map("_id") @db.ObjectId
+    instituteId      String             @unique @db.ObjectId
+    razorpaySubId    String?
+    planType         PlanType           @default(SOLO)
+    userLimit        Int                @default(1)
+    trialEndsAt      DateTime?
+    status           SubscriptionStatus @default(TRIAL)
+    currentPeriodEnd DateTime?
+    deletedAt        DateTime?
+    createdAt        DateTime           @default(now())
+    updatedAt        DateTime           @updatedAt
+
+    @@index([status])
+    @@map("subscriptions")
+}
+
+type LeadActivity {
+    activityType String
+    title        String
+    description  String?
+    actorUserId  String?
+    createdAt    DateTime
+}
+
+model Lead {
+    id          String         @id @default(auto()) @map("_id") @db.ObjectId
+    instituteId String         @db.ObjectId
+    name        String
+    phone       String
+    email       String?
+    source      String?
+    course      String?
+    message     String?
+    followUpAt  DateTime?
+    status      String         @default("NEW")
+    createdBy   String?        @db.ObjectId
+    deletedAt   DateTime?
+    activities  LeadActivity[]
+    createdAt   DateTime       @default(now())
+    updatedAt   DateTime       @updatedAt
+
+    @@unique([instituteId, phone])
+    @@index([instituteId])
+    @@map("leads")
+}
+
+model Course {
+    id          String    @id @default(auto()) @map("_id") @db.ObjectId
+    instituteId String    @db.ObjectId
+    name        String
+    slug        String?
+    banner      String?
+    duration    String?
+    defaultFees Float?
+    description String?
+    createdBy   String?   @db.ObjectId
+    deletedAt   DateTime?
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+
+    @@index([instituteId])
+    @@map("courses")
+}
+
+model Batch {
+    id          String    @id @default(auto()) @map("_id") @db.ObjectId
+    instituteId String    @db.ObjectId
+    courseId    String    @db.ObjectId
+    name        String
+    slug        String?
+    startDate   DateTime?
+    schedule    String?
+    teacherId   String?   @db.ObjectId
+    createdBy   String?   @db.ObjectId
+    deletedAt   DateTime?
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+
+    @@index([instituteId])
+    @@index([courseId])
+    @@map("batches")
+}
+
+model Student {
+    id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+    instituteId        String    @db.ObjectId
+    name               String
+    phone              String
+    email              String?
+    courseId           String?   @db.ObjectId
+    batchId            String?   @db.ObjectId
+    createdBy          String?   @db.ObjectId
+    portalUsername     String?
+    portalEmail        String?
+    portalPasswordHash String?
+    portalActive       Boolean   @default(true)
+    admissionDate      DateTime  @default(now())
+    deletedAt          DateTime?
+    createdAt          DateTime  @default(now())
+    updatedAt          DateTime  @updatedAt
+
+    @@unique([instituteId, phone])
+    @@index([instituteId])
+    @@map("students")
+}
+
+model FeePlan {
+    id          String    @id @default(auto()) @map("_id") @db.ObjectId
+    studentId   String    @db.ObjectId
+    instituteId String    @db.ObjectId
+    totalAmount Float
+    dueDate     DateTime?
+    createdBy   String?   @db.ObjectId
+    deletedAt   DateTime?
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+
+    @@index([studentId])
+    @@map("feeplans")
+}
+
+model FeeInstallment {
+    id          String            @id @default(auto()) @map("_id") @db.ObjectId
+    feePlanId   String            @db.ObjectId
+    instituteId String            @db.ObjectId
+    amount      Float
+    paidOn      DateTime?
+    note        String?
+    status      InstallmentStatus
+    createdBy   String?           @db.ObjectId
+    deletedAt   DateTime?
+    createdAt   DateTime          @default(now())
+    updatedAt   DateTime          @updatedAt
+
+    @@index([feePlanId])
+    @@map("feeinstallments")
+}
+
+model Payment {
+    id          String    @id @default(auto()) @map("_id") @db.ObjectId
+    instituteId String    @db.ObjectId
+    studentId   String    @db.ObjectId
+    amount      Float
+    method      String?
+    reference   String?
+    createdBy   String?   @db.ObjectId
+    paidOn      DateTime  @default(now())
+    deletedAt   DateTime?
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+
+    @@index([studentId])
+    @@index([instituteId])
+    @@map("payments")
+}
+
+model StudentAnnouncement {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    instituteId String   @db.ObjectId
+    batchId     String?  @db.ObjectId
+    title       String
+    body        String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    @@index([instituteId])
+    @@map("studentannouncements")
+}
+
+enum InstallmentStatus {
+    PENDING
+    PAID
+    OVERDUE
+}

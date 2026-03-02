@@ -1,0 +1,121 @@
+{
+  "goals": [],
+  "tasks": [],
+  "decisions": [],
+  "events": [],
+  "plans": [],
+  "memories": [],
+  "conversations": [
+    {
+      "id": "6b82ace9-2969-4e0e-aebe-fb2e77742a70",
+      "role": "assistant",
+      "content": "Jarvis analysis: hello | Context: Goals: none | Pending tasks: 0 | Recent events: none",
+      "createdAt": "2026-03-02T17:06:28.698Z"
+    },
+    {
+      "id": "fabb9757-3714-4ecc-ba36-79e5d5508641",
+      "role": "user",
+      "content": "hello",
+      "createdAt": "2026-03-02T17:06:28.695Z"
+    },
+    {
+      "id": "9b502547-7a97-47f5-b9f4-f2eb74eace90",
+      "role": "assistant",
+      "content": "Jarvis analysis: helllo | Context: Goals: none | Pending tasks: 0 | Recent events: none",
+      "createdAt": "2026-03-02T17:05:43.497Z"
+    },
+    {
+      "id": "d48037c7-2b62-4e88-8c89-5f15849a95ea",
+      "role": "user",
+      "content": "helllo",
+      "createdAt": "2026-03-02T17:05:43.493Z"
+    },
+    {
+      "id": "14156237-7325-4bae-99ed-fd507d55563a",
+      "role": "assistant",
+      "content": "Jarvis analysis: hello | Context: Goals: none | Pending tasks: 0 | Recent events: none",
+      "createdAt": "2026-03-02T17:05:29.444Z"
+    },
+    {
+      "id": "2be02633-6c4d-4cfd-a85f-4667b4bf8338",
+      "role": "user",
+      "content": "hello",
+      "createdAt": "2026-03-02T17:05:29.436Z"
+    },
+    {
+      "id": "10b75989-539f-4854-8429-e3451a9e7de7",
+      "role": "assistant",
+      "content": "Jarvis analysis: hello | Context: Goals: none | Pending tasks: 0 | Recent events: none",
+      "createdAt": "2026-03-02T14:51:40.424Z"
+    },
+    {
+      "id": "80f2ebe7-55e7-48c1-8b17-4e220c3b26d4",
+      "role": "user",
+      "content": "hello",
+      "createdAt": "2026-03-02T14:51:40.417Z"
+    },
+    {
+      "id": "6c254e4b-14b2-4587-b3fe-9381e3bd15e9",
+      "role": "assistant",
+      "content": "Jarvis analysis: hello | Context: Goals: none | Pending tasks: 0 | Recent events: none",
+      "createdAt": "2026-03-02T14:39:08.468Z"
+    },
+    {
+      "id": "ce293d6d-7b64-4dc1-8fa0-635bf9e0d719",
+      "role": "user",
+      "content": "hello",
+      "createdAt": "2026-03-02T14:39:08.458Z"
+    },
+    {
+      "id": "2c240ba2-a5e7-425e-ae2f-93abc79d02ff",
+      "role": "assistant",
+      "content": "Jarvis analysis: hello | Context: Goals: none | Pending tasks: 0 | Recent events: none",
+      "createdAt": "2026-03-02T14:23:26.247Z"
+    },
+    {
+      "id": "a2334866-399f-4026-929e-77e7e88f4285",
+      "role": "user",
+      "content": "hello",
+      "createdAt": "2026-03-02T14:23:26.242Z"
+    },
+    {
+      "id": "36804b62-cffd-434e-89ab-b2b503cfe5da",
+      "role": "assistant",
+      "content": "Jarvis analysis: hello | Context: Goals: none | Pending tasks: 0 | Recent events: none",
+      "createdAt": "2026-03-02T14:22:47.835Z"
+    },
+    {
+      "id": "aa77e68e-8759-4ed9-b8c7-1b8a30144076",
+      "role": "user",
+      "content": "hello",
+      "createdAt": "2026-03-02T14:22:47.794Z"
+    }
+  ],
+  "reports": [],
+  "agents": [
+    {
+      "id": "80676f49-d5a5-499d-ac65-b111124fced1",
+      "name": "Daily Agent",
+      "schedule": "0 8 * * *",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "8a5bea75-4c5b-4c72-becd-bc39f053dc6b",
+      "name": "Monitoring Agent",
+      "schedule": "*/15 * * * *",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d018fa0c-8c57-4a90-8b32-73afb9f6e5b7",
+      "name": "Reminder Agent",
+      "schedule": "*/30 * * * *",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "403db851-49ce-4f16-808b-69db37bb6dfe",
+      "name": "Research Agent",
+      "schedule": "0 */4 * * *",
+      "status": "ACTIVE"
+    }
+  ]
+}
