@@ -64,6 +64,16 @@ export function ImraboMap({
     useEffect(() => {
         if (!mapContainerRef.current || mapRef.current) return;
 
+        // const map = new maplibregl.Map({
+        //     container: mapContainerRef.current,
+        //     style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+        //     center: [73.8567, 18.5204],
+        //     zoom: 11,
+        //     pitch: 35,
+        //     bearing: -8,
+        //     attributionControl: false,
+        //     dragRotate: false,
+        // });
         const map = new maplibregl.Map({
             container: mapContainerRef.current,
             style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
@@ -72,6 +82,13 @@ export function ImraboMap({
             pitch: 35,
             bearing: -8,
             attributionControl: false,
+
+            // ✅ VALID OPTIMIZATION
+            maxTileCacheSize: 512,
+
+            // ✅ OPTIONAL UX IMPROVEMENT
+            fadeDuration: 0,
+
             dragRotate: false,
         });
 
