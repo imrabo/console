@@ -1,24 +1,21 @@
-import type { ReactNode, CSSProperties } from 'react';
-import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/components/app-sidebar';
+import type { ReactNode, CSSProperties } from "react";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 
-import { CommandMenu } from '@/components/CommandMenu';
-import { SiteHeader } from '@/components/site-header';
-
-interface AdminLayoutProps {
-  children: ReactNode;
-}
+import { CommandMenu } from "@/components/CommandMenu";
+import { SiteHeader } from "@/components/site-header";
+import { Outlet } from "react-router-dom";
 
 // Server Component — no "use client" needed.
 // SidebarProvider/AppSidebar/SiteHeader have their own client boundaries.
-export default function AdminLayout({ children }: AdminLayoutProps) {
+export default function AdminLayout() {
   return (
     <SidebarProvider
       style={
         {
-          '--sidebar-width': '280px',
-          '--sidebar-width-icon': '56px',
-          '--header-height': '64px',
+          "--sidebar-width": "280px",
+          "--sidebar-width-icon": "56px",
+          "--header-height": "64px",
         } as CSSProperties
       }
     >
@@ -26,7 +23,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       <SidebarInset>
         <SiteHeader />
         <main className="flex flex-1 flex-col">
-          <div className="mx-auto w-full max-w-[1600px] px-6 py-6">{children}</div>
+          <div className="mx-auto w-full max-w-[1600px] px-6 py-6">
+            <Outlet />
+          </div>
         </main>
       </SidebarInset>
       <CommandMenu />

@@ -1,7 +1,5 @@
-'use client';
-
-import { useCallback, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   BarChart3Icon,
   BellIcon,
@@ -17,9 +15,9 @@ import {
   ShieldCheckIcon,
   UsersIcon,
   VideoIcon,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { useCommandMenuStore } from '@/hooks/useCommandMenu';
+import { useCommandMenuStore } from "@/hooks/useCommandMenu";
 import {
   Command,
   CommandDialog,
@@ -30,31 +28,36 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from './ui/command';
+} from "./ui/command";
 
 const navItems = [
-  { label: 'Dashboard', href: '/', icon: LayoutDashboardIcon, shortcut: 'G H' },
-  { label: 'Users', href: '/users', icon: UsersIcon, shortcut: 'G U' },
-  { label: 'Communities', href: '/communities', icon: HomeIcon, shortcut: 'G V' },
-  { label: 'Meetups', href: '/meetups', icon: CalendarIcon },
-  { label: 'Feed', href: '/feed', icon: MessageSquareIcon },
-  { label: 'Resources', href: '/resources', icon: FileTextIcon },
-  { label: 'Webinars', href: '/webinars', icon: VideoIcon },
-  { label: 'Memberships', href: '/memberships', icon: CreditCardIcon },
-  { label: 'Notifications', href: '/notifications', icon: BellIcon },
-  { label: 'Moderation', href: '/moderation', icon: ShieldCheckIcon },
-  { label: 'Analytics', href: '/analytics', icon: BarChart3Icon },
-  { label: 'Settings', href: '/settings', icon: Settings2Icon },
+  { label: "Dashboard", href: "/", icon: LayoutDashboardIcon, shortcut: "G H" },
+  { label: "Users", href: "/users", icon: UsersIcon, shortcut: "G U" },
+  {
+    label: "Communities",
+    href: "/communities",
+    icon: HomeIcon,
+    shortcut: "G V",
+  },
+  { label: "Meetups", href: "/meetups", icon: CalendarIcon },
+  { label: "Feed", href: "/feed", icon: MessageSquareIcon },
+  { label: "Resources", href: "/resources", icon: FileTextIcon },
+  { label: "Webinars", href: "/webinars", icon: VideoIcon },
+  { label: "Memberships", href: "/memberships", icon: CreditCardIcon },
+  { label: "Notifications", href: "/notifications", icon: BellIcon },
+  { label: "Moderation", href: "/moderation", icon: ShieldCheckIcon },
+  { label: "Analytics", href: "/analytics", icon: BarChart3Icon },
+  { label: "Settings", href: "/settings", icon: Settings2Icon },
 ];
 
 export function CommandMenu() {
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const { open, openMenu, closeMenu } = useCommandMenuStore();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
 
         if (open) {
@@ -65,19 +68,19 @@ export function CommandMenu() {
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [open, openMenu, closeMenu]);
 
-  const navigate = useCallback(
+  const handleNavigate = useCallback(
     (href: string) => {
       closeMenu();
-      router.push(href);
+      navigate(href);
     },
-    [router, closeMenu]
+    [navigate, closeMenu],
   );
 
   return (
@@ -105,12 +108,14 @@ export function CommandMenu() {
                 <CommandItem
                   key={item.href}
                   value={item.label}
-                  onSelect={() => navigate(item.href)}
+                  onSelect={() => handleNavigate(item.href)}
                 >
                   <Icon className="size-4" />
                   <span>{item.label}</span>
 
-                  {item.shortcut && <CommandShortcut>{item.shortcut}</CommandShortcut>}
+                  {item.shortcut && (
+                    <CommandShortcut>{item.shortcut}</CommandShortcut>
+                  )}
                 </CommandItem>
               );
             })}
@@ -119,12 +124,12 @@ export function CommandMenu() {
           <CommandSeparator />
 
           <CommandGroup heading="Quick Actions">
-            <CommandItem onSelect={() => navigate('/users')}>
+            <CommandItem onSelect={() => handleNavigate("/users")}>
               <UsersIcon className="size-4" />
               <span>Add New User</span>
             </CommandItem>
 
-            <CommandItem onSelect={() => navigate('/moderation')}>
+            <CommandItem onSelect={() => handleNavigate("/moderation")}>
               <ShieldCheckIcon className="size-4" />
               <span>View Pending Reports</span>
             </CommandItem>

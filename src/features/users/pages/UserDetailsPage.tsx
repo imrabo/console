@@ -1,7 +1,4 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import { useRouter } from "next/navigation";
 
 import {
   ArrowLeft,
@@ -16,20 +13,20 @@ import {
   Crown,
   Shield,
   User,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { Badge } from '@/components/ui/badge';
+import { Badge } from "@/components/ui/badge";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { Separator } from '@/components/ui/separator';
+import { Separator } from "@/components/ui/separator";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { UserType } from '../types';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { UserType } from "../types";
 
 interface UserDetailsPageProps {
   user: UserType;
@@ -70,7 +67,11 @@ export function UserDetailsPage({
 
                     <Badge>{user.membershipType}</Badge>
 
-                    <Badge variant={user.status === 'active' ? 'default' : 'destructive'}>
+                    <Badge
+                      variant={
+                        user.status === "active" ? "default" : "destructive"
+                      }
+                    >
                       {user.status}
                     </Badge>
                   </div>
@@ -101,9 +102,9 @@ export function UserDetailsPage({
 
                 <Button
                   variant="outline"
-                  onClick={user.status === 'active' ? onSuspend : onActivate}
+                  onClick={user.status === "active" ? onSuspend : onActivate}
                 >
-                  {user.status === 'active' ? 'Suspend' : 'Activate'}
+                  {user.status === "active" ? "Suspend" : "Activate"}
                 </Button>
               </div>
             </div>
@@ -124,7 +125,9 @@ export function UserDetailsPage({
           <CardContent className="p-6">
             <User />
 
-            <div className="text-3xl font-bold">{user.children?.length || 0}</div>
+            <div className="text-3xl font-bold">
+              {user.children?.length || 0}
+            </div>
           </CardContent>
         </Card>
 
@@ -164,9 +167,15 @@ export function UserDetailsPage({
 
                     <InfoRow label="Membership" value={user.membershipType} />
 
-                    <InfoRow label="Expert" value={user.isExpert ? 'Yes' : 'No'} />
+                    <InfoRow
+                      label="Expert"
+                      value={user.isExpert ? "Yes" : "No"}
+                    />
 
-                    <InfoRow label="Joined" value={new Date(user.createdAt).toLocaleDateString()} />
+                    <InfoRow
+                      label="Joined"
+                      value={new Date(user.createdAt).toLocaleDateString()}
+                    />
                   </CardContent>
                 </Card>
 
@@ -198,7 +207,7 @@ export function UserDetailsPage({
 
                     <InfoRow label="Phone" value={user.mobileNo} />
 
-                    <InfoRow label="Gender" value={user.gender || '-'} />
+                    <InfoRow label="Gender" value={user.gender || "-"} />
 
                     {/* <InfoRow
                                         label="Date of Birth"
@@ -318,7 +327,9 @@ export function UserDetailsPage({
                       <div>
                         <p className="font-medium">Membership Activated</p>
 
-                        <p className="text-muted-foreground text-sm">Premium Membership</p>
+                        <p className="text-muted-foreground text-sm">
+                          Premium Membership
+                        </p>
                       </div>
                     </div>
 
@@ -328,7 +339,9 @@ export function UserDetailsPage({
                       <div>
                         <p className="font-medium">Last Profile Update</p>
 
-                        <p className="text-muted-foreground text-sm">2 days ago</p>
+                        <p className="text-muted-foreground text-sm">
+                          2 days ago
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -352,7 +365,7 @@ export function InfoRow({ label, value }: InfoRowProps) {
     <div className="flex items-center justify-between rounded-lg border p-3">
       <span className="text-muted-foreground text-sm">{label}</span>
 
-      <span className="text-right font-medium">{value || '-'}</span>
+      <span className="text-right font-medium">{value || "-"}</span>
     </div>
   );
 }

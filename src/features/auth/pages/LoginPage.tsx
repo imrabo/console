@@ -1,21 +1,21 @@
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import React from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useAuth } from '@/providers/AuthProvider';
-import { toast } from 'sonner';
+import { useAuth } from "@/providers/AuthProvider";
+import { toast } from "sonner";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-import { Mail, Lock } from 'lucide-react';
-import Image from 'next/image';
-import { LoginFormValues, loginSchema } from '../schemas/auth.schema';
-import { email } from 'zod';
+import { Mail, Lock } from "lucide-react";
+
+import { LoginFormValues, loginSchema } from "../schemas/auth.schema";
+import { email } from "zod";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -30,8 +30,8 @@ export default function LoginPage() {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 
@@ -41,12 +41,12 @@ export default function LoginPage() {
 
       await login(data.email, data.password);
 
-      toast.success('Login successful');
+      toast.success("Login successful");
 
-      router.push('/');
+      router.push("/");
     } catch (error: unknown) {
       const err = error as Error;
-      toast.error(err?.message || 'Login failed');
+      toast.error(err?.message || "Login failed");
     } finally {
       setIsSubmitting(false);
     }
@@ -56,7 +56,7 @@ export default function LoginPage() {
     <Card className="w-96">
       <CardHeader className="space-y-4 text-center">
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border">
-          <Image
+          <image
             src="/hugged-logo-512x512.png"
             alt="Logo"
             width={50}
@@ -82,11 +82,13 @@ export default function LoginPage() {
                 type="email"
                 placeholder="name@example.com"
                 className="pl-10"
-                {...register('email')}
+                {...register("email")}
               />
             </div>
 
-            {errors.email && <p className="text-destructive text-sm">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-destructive text-sm">{errors.email.message}</p>
+            )}
           </div>
 
           {/* Password */}
@@ -101,23 +103,25 @@ export default function LoginPage() {
                 type="password"
                 placeholder="Enter password"
                 className="pl-10"
-                {...register('password')}
+                {...register("password")}
               />
             </div>
 
             {errors.password && (
-              <p className="text-destructive text-sm">{errors.password.message}</p>
+              <p className="text-destructive text-sm">
+                {errors.password.message}
+              </p>
             )}
           </div>
 
           <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? 'Signing In...' : 'Sign In'}
+            {isSubmitting ? "Signing In..." : "Sign In"}
           </Button>
 
           {/* Attribution */}
           <div className="border-t pt-4">
             <p className="text-muted-foreground text-center text-xs">
-              Crafted by{' '}
+              Crafted by{" "}
               <a
                 href="https://strix.website"
                 target="_blank"

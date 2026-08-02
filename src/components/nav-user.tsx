@@ -1,18 +1,16 @@
-'use client';
-
-import Link from 'next/link';
+import { Link } from "react-router-dom";
 import {
   ChevronsUpDownIcon,
   LogOutIcon,
   Settings2Icon,
   ShieldIcon,
   UserCircleIcon,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { useAuth } from '@/providers/AuthProvider';
+import { useAuth } from "@/providers/AuthProvider";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,21 +19,21 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@/components/ui/sidebar';
+} from "@/components/ui/sidebar";
 
 function getInitials(name?: string | null) {
-  if (!name) return '?';
+  if (!name) return "?";
   return name
-    .split(' ')
+    .split(" ")
     .map((n) => n[0])
     .slice(0, 2)
-    .join('')
+    .join("")
     .toUpperCase();
 }
 
@@ -49,10 +47,10 @@ export function NavUser() {
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger>
             <SidebarMenuButton
               size="lg"
-              tooltip={user.displayName ?? 'Profile'}
+              tooltip={user.displayName ?? "Profile"}
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
@@ -72,7 +70,7 @@ export function NavUser() {
 
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? 'bottom' : 'right'}
+            side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
           >
@@ -86,7 +84,9 @@ export function NavUser() {
                 </Avatar>
 
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.displayName}</span>
+                  <span className="truncate font-medium">
+                    {user.displayName}
+                  </span>
                 </div>
               </div>
 
@@ -103,14 +103,14 @@ export function NavUser() {
 
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Link href="/profile">
+                <Link to="/profile">
                   <UserCircleIcon className="size-4" />
                   My Profile
                 </Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <Link href="/settings">
+                <Link to="/settings">
                   <Settings2Icon className="size-4" />
                   Settings
                 </Link>
@@ -119,7 +119,10 @@ export function NavUser() {
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem onClick={logout} className="text-destructive focus:text-destructive">
+            <DropdownMenuItem
+              onClick={logout}
+              className="text-destructive focus:text-destructive"
+            >
               <LogOutIcon className="size-4" />
               Sign Out
             </DropdownMenuItem>

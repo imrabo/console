@@ -1,7 +1,0 @@
-'use client';
-
-import LoginPage from '@/features/auth/pages/LoginPage';
-
-export default function LoginRoute() {
-  return <LoginPage />;
-}

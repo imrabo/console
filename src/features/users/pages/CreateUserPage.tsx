@@ -1,18 +1,22 @@
-'use client';
+import { useNavigate } from "react-router-dom";
 
-import { useRouter } from 'next/navigation';
+import { ArrowLeft } from "lucide-react";
 
-import { ArrowLeft } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 
-import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { UserForm } from "../components/UserForm";
 
-import { UserForm } from '../components/UserForm';
+import { useCreateUserMutation } from "../hooks/useUsers";
 
-import { useCreateUserMutation } from '../hooks/useUsers';
-
-import type { CreateUserFormValues } from '../schemas';
+import type { CreateUserFormValues } from "../schemas";
 
 export default function CreateUserPage() {
   const router = useRouter();
@@ -21,7 +25,7 @@ export default function CreateUserPage() {
 
   const handleSubmit = (values: CreateUserFormValues) => {
     createUser.mutate(values, {
-      onSuccess: () => router.push('/users'),
+      onSuccess: () => router.push("/users"),
     });
   };
 
@@ -29,7 +33,11 @@ export default function CreateUserPage() {
     <div className="container mx-auto max-w-7xl space-y-6 p-6">
       <div className="flex items-center justify-between">
         <div>
-          <Button variant="ghost" onClick={() => router.back()} className="mb-3">
+          <Button
+            variant="ghost"
+            onClick={() => router.back()}
+            className="mb-3"
+          >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
           </Button>

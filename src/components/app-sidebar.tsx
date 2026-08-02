@@ -1,33 +1,19 @@
-'use client';
+import * as React from "react";
 
-import * as React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import {
   LayoutDashboardIcon,
   UsersIcon,
-  HomeIcon,
   CalendarIcon,
-  BookOpenIcon,
   FileTextIcon,
   VideoIcon,
-  CreditCardIcon,
-  BellIcon,
-  ShieldCheckIcon,
-  BarChart3Icon,
   Settings2Icon,
-  CoinsIcon,
   RssIcon,
-  GroupIcon,
-  Group,
   Crown,
   Menu,
-  LucideLogs,
   LogsIcon,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
+import { NavMain } from "@/components/nav-main";
 import {
   Sidebar,
   SidebarContent,
@@ -36,27 +22,28 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar';
-import { Separator } from './ui/separator';
+} from "@/components/ui/sidebar";
+import { Separator } from "./ui/separator";
+import { Link } from "react-router-dom";
 
 const data = {
   user: {
-    name: 'Admin',
-    email: 'admin@hugged.app',
-    avatar: '/avatars/admin.png',
+    name: "Admin",
+    email: "admin@hugged.app",
+    avatar: "/avatars/admin.png",
   },
 
   navMain: [
-    { title: 'Dashboard', url: '/', icon: LayoutDashboardIcon },
-    { title: 'Users', url: '/users', icon: UsersIcon },
-    { title: 'Communities', url: '/communities', icon: Menu },
-    { title: 'Meetups', url: '/meetups', icon: CalendarIcon },
-    { title: 'Feed', url: '/feed', icon: RssIcon },
-    { title: 'Webinars', url: '/webinars', icon: VideoIcon },
-    { title: 'Resources', url: '/resources', icon: FileTextIcon },
-    { title: 'Moderation', url: '/moderation', icon: LogsIcon },
-    { title: 'Team', url: '/admins', icon: Crown },
-    { title: 'Settings', url: '/settings', icon: Settings2Icon },
+    { title: "Dashboard", url: "/", icon: LayoutDashboardIcon },
+    { title: "Users", url: "/users", icon: UsersIcon },
+    { title: "Communities", url: "/communities", icon: Menu },
+    { title: "Meetups", url: "/meetups", icon: CalendarIcon },
+    { title: "Feed", url: "/feed", icon: RssIcon },
+    { title: "Webinars", url: "/webinars", icon: VideoIcon },
+    { title: "Resources", url: "/resources", icon: FileTextIcon },
+    { title: "Moderation", url: "/moderation", icon: LogsIcon },
+    { title: "Team", url: "/admins", icon: Crown },
+    { title: "Settings", url: "/settings", icon: Settings2Icon },
   ],
 };
 
@@ -66,19 +53,23 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" className="data-[slot=sidebar-menu-button]:p-1.5">
-              <Link href="/" className="flex items-center gap-3">
-                <Image
+            <SidebarMenuButton
+              size="lg"
+              className="data-[slot=sidebar-menu-button]:p-1.5"
+            >
+              <Link to="/" className="flex items-center gap-3">
+                <img
                   src="/hugged-logo-512x512.png"
                   alt="HUGGED"
                   width={40}
                   height={40}
-                  priority
                 />
 
                 <div className="flex flex-col leading-none">
                   <span className="text-base font-semibold">HUGGED</span>
-                  <span className="text-muted-foreground text-xs">Admin Console</span>
+                  <span className="text-muted-foreground text-xs">
+                    Admin Console
+                  </span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -93,7 +84,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       <Separator />
       <SidebarFooter>
         <p className="text-muted-foreground text-xs">
-          Built by{' '}
+          Built by{" "}
           <a
             href="https://strix.website"
             target="_blank"

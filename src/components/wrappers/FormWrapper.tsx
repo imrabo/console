@@ -1,12 +1,18 @@
-import React from 'react';
-import { FieldValues, UseFormReturn } from 'react-hook-form';
+import React from "react";
+import type { FieldValues, UseFormReturn } from "react-hook-form";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
 
-import { FormFooter } from './FormFooter';
+import { FormFooter } from "./FormFooter";
 
 export interface FormWrapperProps<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -48,8 +54,8 @@ export function FormWrapper<T extends FieldValues>({
   showHeader = true,
   showFooter = true,
 
-  submitLabel = 'Save',
-  cancelLabel = 'Cancel',
+  submitLabel = "Save",
+  cancelLabel = "Cancel",
 
   onCancel,
 
@@ -58,7 +64,7 @@ export function FormWrapper<T extends FieldValues>({
   const isBusy = loading || submitting;
 
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn("relative", className)}>
       {isBusy && <LoadingOverlay />}
 
       <Card className="overflow-hidden">
