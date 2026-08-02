@@ -29,7 +29,7 @@ import { Link } from "react-router-dom";
 const data = {
   user: {
     name: "Admin",
-    email: "admin@hugged.app",
+    email: "admin@imrabo.app",
     avatar: "/avatars/admin.png",
   },
 
@@ -59,7 +59,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
             >
               <Link to="/" className="flex items-center gap-3">
                 <img
-                  src="/hugged-logo-512x512.png"
+                  src="/imrabo-logo-512x512.png"
                   alt="HUGGED"
                   width={40}
                   height={40}

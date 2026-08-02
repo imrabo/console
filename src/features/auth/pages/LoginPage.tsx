@@ -57,7 +57,7 @@ export default function LoginPage() {
       <CardHeader className="space-y-4 text-center">
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border">
           <image
-            src="/hugged-logo-512x512.png"
+            src="/imrabo-logo-512x512.png"
             alt="Logo"
             width={50}
             height={50}
