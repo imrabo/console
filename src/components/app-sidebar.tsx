@@ -36,10 +36,10 @@ const data = {
   navMain: [
     { title: "Dashboard", url: "/", icon: LayoutDashboardIcon },
     { title: "Users", url: "/users", icon: UsersIcon },
-    { title: "Communities", url: "/communities", icon: Menu },
-    { title: "Meetups", url: "/meetups", icon: CalendarIcon },
+    { title: "Organizations", url: "/communities", icon: Menu },
+    { title: "Agents", url: "/agents", icon: CalendarIcon },
     { title: "Feed", url: "/feed", icon: RssIcon },
-    { title: "Webinars", url: "/webinars", icon: VideoIcon },
+    { title: "Memorys", url: "/memorys", icon: VideoIcon },
     { title: "Resources", url: "/resources", icon: FileTextIcon },
     { title: "Moderation", url: "/moderation", icon: LogsIcon },
     { title: "Team", url: "/admins", icon: Crown },
@@ -60,13 +60,13 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
               <Link to="/" className="flex items-center gap-3">
                 <img
                   src="/imrabo-logo-512x512.png"
-                  alt="HUGGED"
+                  alt="Imrabo"
                   width={40}
                   height={40}
                 />
 
                 <div className="flex flex-col leading-none">
-                  <span className="text-base font-semibold">HUGGED</span>
+                  <span className="text-base font-semibold">Imrabo</span>
                   <span className="text-muted-foreground text-xs">
                     Admin Console
                   </span>

@@ -1,6 +1,6 @@
 import * as zod from 'zod';
 
-export const createMeetupSchema = zod.object({
+export const createAgentSchema = zod.object({
   title: zod.string().min(3, 'Title must be at least 3 characters'),
   description: zod.string().min(5, 'Description must be at least 5 characters'),
   organizerName: zod.string().min(2, 'Organizer name must be at least 2 characters'),
@@ -13,4 +13,4 @@ export const createMeetupSchema = zod.object({
   maxRegistrations: zod.coerce.number().min(2, 'Minimum registration size is 2').default(10),
 });
 
-export type CreateMeetupFormValues = zod.infer<typeof createMeetupSchema>;
+export type CreateAgentFormValues = zod.infer<typeof createAgentSchema>;

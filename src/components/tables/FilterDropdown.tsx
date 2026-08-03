@@ -1,10 +1,20 @@
-import { Table } from '@tanstack/react-table';
-import { Filter } from 'lucide-react';
+import type { Table } from "@tanstack/react-table";
+import { Filter } from "lucide-react";
 
-import { Button } from '../ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export interface DataTableFilter {
   key: string;
@@ -21,10 +31,13 @@ interface FilterDropdownProps<TData> {
   filters: DataTableFilter[];
 }
 
-export function FilterDropdown<TData>({ table, filters }: FilterDropdownProps<TData>) {
+export function FilterDropdown<TData>({
+  table,
+  filters,
+}: FilterDropdownProps<TData>) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger>
         <Button variant="outline">
           <Filter className="mr-2 h-4 w-4" />
           Filters
@@ -35,16 +48,25 @@ export function FilterDropdown<TData>({ table, filters }: FilterDropdownProps<TD
         <div className="space-y-4">
           {filters.map((filter) => (
             <div key={filter.key}>
-              <label className="mb-2 block text-sm font-medium">{filter.label}</label>
+              <label className="mb-2 block text-sm font-medium">
+                {filter.label}
+              </label>
 
               <Select
-                value={(table.getColumn(filter.key)?.getFilterValue() as string) ?? ''}
+                value={
+                  (table.getColumn(filter.key)?.getFilterValue() as string) ??
+                  ""
+                }
                 onValueChange={(value) =>
-                  table.getColumn(filter.key)?.setFilterValue(value === 'ALL' ? undefined : value)
+                  table
+                    .getColumn(filter.key)
+                    ?.setFilterValue(value === "ALL" ? undefined : value)
                 }
               >
                 <SelectTrigger>
-                  <SelectValue placeholder={filter.placeholder ?? filter.label} />
+                  <SelectValue
+                    placeholder={filter.placeholder ?? filter.label}
+                  />
                 </SelectTrigger>
 
                 <SelectContent>

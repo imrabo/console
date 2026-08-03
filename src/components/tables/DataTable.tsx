@@ -1,26 +1,32 @@
-import React, { useMemo, useState } from 'react';
+import { useState } from "react";
 import {
-  ColumnFiltersState,
-  PaginationState,
-  RowSelectionState,
-  SortingState,
-  VisibilityState,
+  type ColumnFiltersState,
+  type PaginationState,
+  type RowSelectionState,
+  type SortingState,
+  type VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
-import { Spinner } from '../ui/spinner';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
+import { Spinner } from "../ui/spinner";
 
-import { DataTableToolbar } from './DataTableToolbar';
-import { DataTablePagination } from './DataTablePagination';
-import { DataTableSortIcon } from './DataTableSortIcon';
-import { en } from 'zod/v4/locales';
-import { DataTableProps } from '@/types/datatable.types';
+import { DataTableToolbar } from "./DataTableToolbar";
+import { DataTablePagination } from "./DataTablePagination";
+import { DataTableSortIcon } from "./DataTableSortIcon";
+import type { DataTableProps } from "@/types/datatable.types";
 
 export function DataTable<TData, TValue>({
   columns,
@@ -31,7 +37,7 @@ export function DataTable<TData, TValue>({
   search,
   searchKey,
   onSearchChange,
-  searchPlaceholder = 'Search...',
+  searchPlaceholder = "Search...",
   manualSearch = false,
 
   sorting,
@@ -63,22 +69,29 @@ export function DataTable<TData, TValue>({
   enableRowSelection = false,
 
   toolbar,
-  emptyMessage = 'No records found.',
+  emptyMessage = "No records found.",
 
   onRowClick,
 }: DataTableProps<TData, TValue>) {
   const [internalSorting, setInternalSorting] = useState<SortingState>([]);
 
-  const [internalFilters, setInternalFilters] = useState<ColumnFiltersState>([]);
+  const [internalFilters, setInternalFilters] = useState<ColumnFiltersState>(
+    [],
+  );
 
-  const [internalPagination, setInternalPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: pagination?.pageSize ?? 10,
-  });
+  const [internalPagination, setInternalPagination] = useState<PaginationState>(
+    {
+      pageIndex: 0,
+      pageSize: pagination?.pageSize ?? 10,
+    },
+  );
 
-  const [internalVisibility, setInternalVisibility] = useState<VisibilityState>({});
+  const [internalVisibility, setInternalVisibility] = useState<VisibilityState>(
+    {},
+  );
 
-  const [internalRowSelection, setInternalRowSelection] = useState<RowSelectionState>({});
+  const [internalRowSelection, setInternalRowSelection] =
+    useState<RowSelectionState>({});
 
   const sortingState = sorting ?? internalSorting;
 
@@ -100,7 +113,9 @@ export function DataTable<TData, TValue>({
 
     getFilteredRowModel: manualFiltering ? undefined : getFilteredRowModel(),
 
-    getPaginationRowModel: manualPagination ? undefined : getPaginationRowModel(),
+    getPaginationRowModel: manualPagination
+      ? undefined
+      : getPaginationRowModel(),
 
     manualSorting,
     manualFiltering,
@@ -169,7 +184,11 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className={header.column.getCanSort() ? 'cursor-pointer select-none' : ''}
+                    className={
+                      header.column.getCanSort()
+                        ? "cursor-pointer select-none"
+                        : ""
+                    }
                     onClick={
                       enableSorting && header.column.getCanSort()
                         ? header.column.getToggleSortingHandler()
@@ -178,10 +197,15 @@ export function DataTable<TData, TValue>({
                   >
                     {header.isPlaceholder ? null : (
                       <div className="flex items-center gap-2">
-                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
 
                         {header.column.getCanSort() && (
-                          <DataTableSortIcon direction={header.column.getIsSorted()} />
+                          <DataTableSortIcon
+                            direction={header.column.getIsSorted()}
+                          />
                         )}
                       </div>
                     )}
@@ -197,18 +221,26 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   onClick={() => onRowClick?.(row.original)}
-                  className={onRowClick ? 'hover:bg-muted/50 cursor-pointer' : ''}
+                  className={
+                    onRowClick ? "hover:bg-muted/50 cursor-pointer" : ""
+                  }
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-32 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-32 text-center"
+                >
                   {emptyMessage}
                 </TableCell>
               </TableRow>

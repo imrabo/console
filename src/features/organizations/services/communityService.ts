@@ -1,8 +1,8 @@
 import { apiClient } from '@/lib/api/client';
-import { ICommunity } from '../types';
+import type { ICommunity } from '../types';
 
 export const communitiesService = {
-  fetchCommunities: () =>
+  fetchOrganizations: () =>
     apiClient.get<ICommunity[]>('/communities'),
 
   fetchCommunityById: (id: string) =>

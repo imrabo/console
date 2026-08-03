@@ -1,14 +1,11 @@
 import { apiClient } from '@/lib/api/client';
-import { IAdminUser } from '@/features/admins';
+import type { IAdminUser } from '@/features/admins';
 
 interface LoginRequest {
     email: string;
     password: string;
 }
 
-interface ForgotPasswordRequest {
-    email: string;
-}
 
 export const authService = {
     login: (data: LoginRequest) =>

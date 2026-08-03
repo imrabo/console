@@ -1,6 +1,5 @@
 // src/features/users/constants/index.ts
 
-import type { UserType } from '@/features/users/types/users.types';
 import { COLLECTIONS } from '@/lib/constants/COLLECTIONS';
 
 

@@ -11,7 +11,6 @@ import LoginPage from "./features/auth/pages/LoginPage";
 import DashboardPage from "./features/dashboard/pages/DashboardPage";
 
 // Profile
-import ProfilePage from "./features/profile/pages/ProfilePage";
 
 // Users
 import UsersPage from "./features/users/pages/UsersPage";
@@ -19,12 +18,9 @@ import CreateUserPage from "./features/users/pages/CreateUserPage";
 import EditUserPage from "./features/users/pages/EditUserPage";
 
 // Organizations
-import OrganizationsPage from "./features/organizations/pages/OrganizationsPage";
-import OrganizationDetailsPage from "./features/organizations/pages/OrganizationDetailsPage";
-import OrganizationEditPage from "./features/organizations/pages/OrganizationEditPage";
-
-// Agents
-import AgentsPage from "./features/agents/pages/AgentsPage";
+// import OrganizationsPage from "./features/organizations/pages/OrganizationsPage";
+// import OrganizationDetailsPage from "./features/organizations/pages/OrganizationDetailsPage";
+// import OrganizationEditPage from "./features/organizations/pages/OrganizationEditPage";
 
 // Memory
 import MemoryPage from "./features/memory/pages/MemoryPage";
@@ -38,6 +34,7 @@ import NotificationsPage from "./features/notifications/pages/NotificationsPage"
 
 // Payments
 import PaymentsPage from "./features/payments/pages/PaymentsPage";
+import ProfilePage from "./features/users/pages/ProfilePage";
 
 export const router = createBrowserRouter([
   {
@@ -83,28 +80,28 @@ export const router = createBrowserRouter([
         ],
       },
 
-      {
-        path: "organizations",
-        children: [
-          {
-            index: true,
-            element: <OrganizationsPage />,
-          },
-          {
-            path: ":id",
-            element: <OrganizationDetailsPage />,
-          },
-          {
-            path: ":id/edit",
-            element: <OrganizationEditPage />,
-          },
-        ],
-      },
+      // {
+      //   path: "organizations",
+      //   children: [
+      //     {
+      //       index: true,
+      //       element: <OrganizationsPage />,
+      //     },
+      //     {
+      //       path: ":id",
+      //       element: <OrganizationDetailsPage />,
+      //     },
+      //     {
+      //       path: ":id/edit",
+      //       element: <OrganizationEditPage />,
+      //     },
+      //   ],
+      // },
 
-      {
-        path: "agents",
-        element: <AgentsPage />,
-      },
+      // {
+      //   path: "agents",
+      //   element: <AgentsPage />,
+      // },
 
       {
         path: "memory",

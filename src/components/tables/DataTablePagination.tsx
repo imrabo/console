@@ -1,9 +1,19 @@
-import React from 'react';
-import { Table } from '@tanstack/react-table';
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import type { Table } from "@tanstack/react-table";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 
-import { Button } from '../ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Button } from "../ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -23,7 +33,9 @@ export function DataTablePagination<TData>({
 }: DataTablePaginationProps<TData>) {
   const { pageIndex, pageSize } = table.getState().pagination;
 
-  const total = manualPagination ? totalRows : table.getFilteredRowModel().rows.length;
+  const total = manualPagination
+    ? totalRows
+    : table.getFilteredRowModel().rows.length;
 
   const start = total === 0 ? 0 : pageIndex * pageSize + 1;
 
@@ -34,14 +46,16 @@ export function DataTablePagination<TData>({
       {/* Left */}
 
       <div className="text-muted-foreground text-sm">
-        Showing <strong>{start}</strong> - <strong>{end}</strong> of <strong>{total}</strong>{' '}
-        records
+        Showing <strong>{start}</strong> - <strong>{end}</strong> of{" "}
+        <strong>{total}</strong> records
       </div>
 
       {/* Right */}
 
       <div className="flex flex-wrap items-center gap-3">
-        <span className="text-muted-foreground text-sm whitespace-nowrap">Rows per page</span>
+        <span className="text-muted-foreground text-sm whitespace-nowrap">
+          Rows per page
+        </span>
 
         <Select
           value={String(pageSize)}
@@ -51,7 +65,7 @@ export function DataTablePagination<TData>({
             <SelectValue />
           </SelectTrigger>
 
-          <SelectContent position="popper">
+          <SelectContent>
             {pageSizeOptions.map((size) => (
               <SelectItem key={size} value={String(size)}>
                 {size}
@@ -61,7 +75,8 @@ export function DataTablePagination<TData>({
         </Select>
 
         <span className="text-muted-foreground text-sm whitespace-nowrap">
-          Page <strong>{pageIndex + 1}</strong> of <strong>{table.getPageCount()}</strong>
+          Page <strong>{pageIndex + 1}</strong> of{" "}
+          <strong>{table.getPageCount()}</strong>
         </span>
 
         <Button

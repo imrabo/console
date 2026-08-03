@@ -1,19 +1,4 @@
-import { useRouter } from "next/navigation";
-
-import {
-  ArrowLeft,
-  Edit,
-  Trash2,
-  UserCheck,
-  ShieldAlert,
-  Mail,
-  Phone,
-  Calendar,
-  Coins,
-  Crown,
-  Shield,
-  User,
-} from "lucide-react";
+import { Edit, Phone, Calendar, Crown, Shield, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -21,12 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Badge } from "@/components/ui/badge";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserType } from "../types";
+import { type UserType } from "../types";
 
 interface UserDetailsPageProps {
   user: UserType;
@@ -43,12 +26,9 @@ interface UserDetailsPageProps {
 export function UserDetailsPage({
   user,
   onEdit,
-  onDelete,
   onSuspend,
   onActivate,
 }: UserDetailsPageProps) {
-  const router = useRouter();
-
   return (
     <div className="container mx-auto max-w-7xl space-y-6 p-6">
       <div>

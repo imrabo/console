@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import resourcesService from '../services/resourcesService';
 import { toast } from 'sonner';
-import type { Resource, ResourceFilters, ResourceStats } from '../types/resources.types';
-import { CreateResourceFormValues, UpdateResourceFormValues } from '../schemas';
+import type { ResourceFilters } from '../types/resources.types';
+import type { CreateResourceFormValues, UpdateResourceFormValues } from '../schemas';
 import { COLLECTIONS } from '@/lib/constants/COLLECTIONS';
 
 /**

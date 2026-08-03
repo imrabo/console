@@ -7,9 +7,7 @@ import {
   UserCircleIcon,
 } from "lucide-react";
 
-import { useAuth } from "@/providers/AuthProvider";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
@@ -26,6 +24,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 function getInitials(name?: string | null) {
   if (!name) return "?";

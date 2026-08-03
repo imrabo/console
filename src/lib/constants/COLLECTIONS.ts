@@ -22,17 +22,17 @@ export const COLLECTIONS = {
 
     FEED_REACTIONS: 'feed_reactions',
 
-    MEETUPS: 'meetups',
+    MEETUPS: 'agents',
 
-    MEETUP_MEMBERS: 'meetup_members',
+    MEETUP_MEMBERS: 'agent_members',
 
     PODS: 'pods',
 
     POD_PARTICIPANTS: 'pod_participants',
 
-    WEBINARS: 'webinars',
+    WEBINARS: 'memorys',
 
-    WEBINAR_PARTICIPANTS: 'webinar_participants',
+    WEBINAR_PARTICIPANTS: 'memory_participants',
 
     NOTIFICATIONS: 'notifications',
 

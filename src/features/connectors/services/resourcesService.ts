@@ -1,7 +1,7 @@
 import { apiClient } from '@/lib/api/client';
 
-import { ResourceFile, StoreProduct } from '../types';
-import {
+import type { ResourceFile, StoreProduct } from '../types';
+import type {
   Resource,
   CreateResourceInput,
   UpdateResourceInput,

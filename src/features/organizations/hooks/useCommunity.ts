@@ -3,23 +3,23 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { COLLECTIONS } from '@/lib/constants/COLLECTIONS';
 import { communitiesService } from '../services/communityService';
-import { ICommunity } from '../types';
+import type { ICommunity } from '../types';
 
-export const useCommunitiesQuery = () => {
+export const useOrganizationsQuery = () => {
   return useQuery({
     queryKey: [COLLECTIONS.COMMUNITIES],
     queryFn: async () => {
-      return await communitiesService.fetchCommunities();
+      return await communitiesService.fetchOrganizations();
     },
   });
 };
 
-// export const useCommunitiesQuery = () => {
+// export const useOrganizationsQuery = () => {
 //   return useQuery({
 //     queryKey: [COLLECTIONS.COMMUNITIES],
 //     queryFn: async () => {
 //       const [data] = await Promise.all([
-//         communitiesService.fetchCommunities(),
+//         communitiesService.fetchOrganizations(),
 
 //       ]);
 //       return { data };

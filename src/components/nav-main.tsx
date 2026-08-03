@@ -6,7 +6,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Icon } from "leaflet";
 import { Link } from "react-router-dom";
 
 export function NavMain({

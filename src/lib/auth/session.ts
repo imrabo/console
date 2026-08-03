@@ -1,5 +1,5 @@
-import { cookies } from 'next/headers';
-import { adminAuth } from '@/lib/firebase/admin';
+
+import { jwtDecode } from "jwt-decode";
 
 export const SESSION_COOKIE_NAME = '__session';
 
@@ -8,8 +8,8 @@ export const SESSION_COOKIE_NAME = '__session';
  * @returns The session token string, or null if not found.
  */
 export async function getSessionToken(): Promise<string | null> {
-  const cookieStore = cookies();
-  return (await (await cookieStore).get(SESSION_COOKIE_NAME)?.value) || null;
+  const cookieStore = localStorage.getItem('cookieStore') ? Promise.resolve(JSON.parse(localStorage.getItem('cookieStore')!)) : Promise.resolve(null);
+  return (await cookieStore)?.[SESSION_COOKIE_NAME]?.value || null;
 }
 /**
  * Verifies the session token against Firebase Admin SDK.
@@ -21,8 +21,8 @@ export async function verifySession(): Promise<string | null> {
 
   try {
     // Assuming adminAuth.verifySessionCookie returns a structure containing the user ID (UID)
-    const decodedToken = await adminAuth.verifySessionCookie(token, true);
-    return decodedToken?.uid || null; // Return UID if available
+    const decodedToken = await jwtDecode(token);
+    return decodedToken?.sub || null; // Return UID if available
   } catch (error) {
     console.warn(
       'Firebase session verification failed:',

@@ -1,10 +1,9 @@
-'use client';
+import React, { createContext, useEffect } from "react";
 
-import React, { createContext, useContext, useEffect } from 'react';
-
-import { IAdminUser } from '@/features/admins';
-import { authService } from '@/features/auth/services/authService';
-import { useAuthStore } from '../lib/store/authStore';
+import type { IAdminUser } from "@/features/admins";
+import { authService } from "@/features/auth/services/authService";
+import { useAuthStore } from "@/lib/store/authStore";
+import { Outlet } from "react-router-dom";
 
 export interface AuthContextType {
   user: IAdminUser | null;
@@ -15,13 +14,11 @@ export interface AuthContextType {
   refreshUser: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined,
+);
 
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
-
-export function AuthProvider({ children }: AuthProviderProps) {
+export const AuthProvider: React.FC = () => {
   const { user, isLoading, setUser, setLoading } = useAuthStore();
 
   useEffect(() => {
@@ -41,7 +38,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     initializeAuth();
   }, [setLoading, setUser]);
 
-  const login = async (email: string, password: string): Promise<IAdminUser> => {
+  const login = async (
+    email: string,
+    password: string,
+  ): Promise<IAdminUser> => {
     setLoading(true);
 
     try {
@@ -91,19 +91,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         refreshUser,
       }}
     >
-      {children}
+      <Outlet />
     </AuthContext.Provider>
   );
-}
-
-export function useAuth(): AuthContextType {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-
-  return context;
-}
+};
 
 export default AuthProvider;

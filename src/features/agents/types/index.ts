@@ -1,4 +1,4 @@
-export interface Meetup {
+export interface Agent {
   id: string;
   title: string;
   description: string;
@@ -18,25 +18,25 @@ export interface Meetup {
   updatedAt: Date;
 }
 
-export interface MeetupRegistration {
+export interface AgentRegistration {
   id: string;
-  meetupId: string;
+  agentId: string;
   userId: string;
   userName: string;
   status: 'Confirmed' | 'Cancelled';
   createdAt: Date;
 }
 
-export interface MeetupWaitlist {
+export interface AgentWaitlist {
   id: string;
-  meetupId: string;
+  agentId: string;
   userId: string;
   userName: string;
   queuePosition: number;
   createdAt: Date;
 }
 
-export interface MeetupCategory {
+export interface AgentCategory {
   id: string;
   name: string;
   color: string;

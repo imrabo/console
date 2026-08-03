@@ -13,10 +13,10 @@ export const ROUTES = {
 
   FEED: '/feed',
 
-  MEETUPS: '/meetups',
-  MEETUP_DETAILS: '/meetups/:id',
+  MEETUPS: '/agents',
+  MEETUP_DETAILS: '/agents/:id',
 
-  WEBINARS: '/webinars',
+  WEBINARS: '/memorys',
 
   RESOURCES: '/resources',
 

@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useTheme } from "next-themes";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
@@ -21,7 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
   SearchIcon,
@@ -30,23 +30,21 @@ import {
   MoonIcon,
   MonitorIcon,
   CheckIcon,
-  KeyboardIcon,
   LogOutIcon,
   HelpCircleIcon,
   Settings2Icon,
-  UserCircleIcon,
 } from "lucide-react";
 
-import { useAuth } from "@/providers/AuthProvider";
 import { cn } from "@/lib/utils";
 import { useCommandMenu } from "@/hooks/useCommandMenu";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 const routeLabels: Record<string, string> = {
   users: "Users",
-  communities: "Communities",
-  meetups: "Meetups",
+  communities: "Organizations",
+  agents: "Agents",
   feed: "Feed",
-  webinars: "Webinars",
+  memorys: "Memorys",
   resources: "Resources",
   memberships: "Memberships",
   coins: "Coins",
@@ -143,7 +141,7 @@ function NotificationsButton() {
       dot: "bg-emerald-500",
     },
     {
-      title: "Webinar scheduled",
+      title: "Memory scheduled",
       desc: "Parenting 101 — tomorrow 3pm",
       time: "1h ago",
       dot: "bg-blue-500",

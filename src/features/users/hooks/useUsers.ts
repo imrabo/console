@@ -4,8 +4,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import usersService from '../services/usersService';
 
 import { toast } from 'sonner';
-import { CreateUserFormValues, EditUserFormValues } from '../schemas';
-import { UserType } from '../types';
+import type { CreateUserFormValues, EditUserFormValues } from '../schemas';
+import type { UserType } from '../types';
 import { COLLECTIONS } from '@/lib/constants/COLLECTIONS';
 
 export const useUsersQuery = () => {

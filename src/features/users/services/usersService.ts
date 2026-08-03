@@ -1,6 +1,6 @@
 import { apiClient } from '@/lib/api/client';
-import { CreateUserFormValues, EditUserFormValues } from '../schemas';
-import { ThemeMode, UserType } from '../types';
+import type { CreateUserFormValues, EditUserFormValues } from '../schemas';
+import type { UserType } from '../types';
 
 export const usersService = {
   async fetchUsers() {

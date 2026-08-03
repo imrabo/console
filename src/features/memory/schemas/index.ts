@@ -1,1 +1,1 @@
-export * from './webinar.schemas';
+export * from './memory.schemas';

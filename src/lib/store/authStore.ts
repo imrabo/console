@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { IAdminUser } from '@/features/admins';
+import type { IAdminUser } from '@/features/admins';
 
 export interface AuthStore {
   user: IAdminUser | null;

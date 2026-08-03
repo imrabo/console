@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useUsersQuery } from "../hooks/useUsers";
 import { DataTable } from "@/components/tables/DataTable";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/providers/AuthProvider";
 
 import {
   DropdownMenu,
@@ -11,16 +10,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
 import { PlusCircle, MoreHorizontal, Shield } from "lucide-react";
-import { toast } from "sonner";
-import { Link } from "react-router-dom";
-import { useRouter } from "next/navigation";
-import { UserType } from "../types";
+import { Link, useNavigate } from "react-router-dom";
+
+import type { UserType } from "../types";
 
 export const UsersPage: React.FC = () => {
   const { data: users, isLoading } = useUsersQuery();
-  const router = useRouter();
+  const router = useNavigate();
 
   const columns: ColumnDef<UserType>[] = [
     {
@@ -97,7 +94,7 @@ export const UsersPage: React.FC = () => {
         const u = row.original;
         return (
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger >
               <Button
                 variant="ghost"
                 size="icon"
@@ -111,10 +108,10 @@ export const UsersPage: React.FC = () => {
               className="bg-card border-border w-48 border"
             >
               <DropdownMenuItem className="cursor-pointer rounded-md text-xs font-medium">
-                <Link href={`/users/${u.id}`}>View Account Details</Link>
+                <Link to={`/users/${u.id}`}>View Account Details</Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer rounded-md text-xs font-medium">
-                <Link href={`/users/${u.id}/edit`}>Edit User details</Link>
+                <Link to={`/users/${u.id}/edit`}>Edit User details</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -145,9 +142,9 @@ export const UsersPage: React.FC = () => {
         searchKey="fullName"
         searchPlaceholder="Search users by name..."
         loading={isLoading}
-        onRowClick={(user) => router.push(`/users/${user.id}`)}
+        onRowClick={(user) => router(`/users/${user.id}`)}
         toolbar={
-          <Link href="/users/create">
+          <Link to="/users/create">
             <Button className="flex items-center gap-2">
               <PlusCircle className="h-4 w-4" />
               Add User

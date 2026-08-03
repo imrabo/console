@@ -1,32 +1,25 @@
-'use client';
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 
-import { ThemeProvider } from 'next-themes';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider } from '@/providers/AuthProvider';
-import { Toaster } from 'sonner';
-import { useState } from 'react';
-import { TooltipProvider } from '@/components/ui/tooltip';
-import NextTopLoader from 'nextjs-toploader';
+import { AuthProvider } from "@/providers/AuthProvider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-export default function AppProviders({ children }: { children: React.ReactNode }) {
+export default function AppProviders(): React.JSX.Element {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      // disableTransitionOnChange
-    >
-      <TooltipProvider>
-        <QueryClientProvider client={queryClient}>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
           <AuthProvider>
-            <NextTopLoader color="#E14D3D" showSpinner={false} />
-            {children}
+            <Outlet />
             <Toaster position="top-center" richColors />
           </AuthProvider>
-        </QueryClientProvider>
-      </TooltipProvider>
+        </TooltipProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

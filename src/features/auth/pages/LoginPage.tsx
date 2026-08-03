@@ -1,9 +1,8 @@
 import React from "react";
-import { useRouter } from "next/navigation";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useAuth } from "@/providers/AuthProvider";
 import { toast } from "sonner";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,11 +13,12 @@ import { Label } from "@/components/ui/label";
 
 import { Mail, Lock } from "lucide-react";
 
-import { LoginFormValues, loginSchema } from "../schemas/auth.schema";
-import { email } from "zod";
+import { type LoginFormValues, loginSchema } from "../schemas/auth.schema";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export default function LoginPage() {
-  const router = useRouter();
+  const router = useNavigate();
   const { login } = useAuth();
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -43,7 +43,7 @@ export default function LoginPage() {
 
       toast.success("Login successful");
 
-      router.push("/");
+      router("/");
     } catch (error: unknown) {
       const err = error as Error;
       toast.error(err?.message || "Login failed");
@@ -56,7 +56,7 @@ export default function LoginPage() {
     <Card className="w-96">
       <CardHeader className="space-y-4 text-center">
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border">
-          <image
+          <img
             src="/imrabo-logo-512x512.png"
             alt="Logo"
             width={50}

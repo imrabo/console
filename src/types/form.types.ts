@@ -1,7 +1,7 @@
-import { TypeParams } from "zod/v4/core"; { FieldValues, UseFormReturn } from "react-hook-form";
-import type { TypeParams } from "zod/v4/core";
 
-interface FormWrapperProps<T extends FieldValues> {
+import type { FieldValues, UseFormReturn } from "react-hook-form";
+
+export interface FormWrapperProps<T extends FieldValues> {
     form: UseFormReturn<T>;
 
     title: string;

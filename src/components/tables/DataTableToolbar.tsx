@@ -1,17 +1,17 @@
-import React from 'react';
-import { Table } from '@tanstack/react-table';
-import { RefreshCw, Search, SlidersHorizontal } from 'lucide-react';
+import React from "react";
+import type { Table } from "@tanstack/react-table";
+import { RefreshCw, Search, SlidersHorizontal } from "lucide-react";
 
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
-import { FilterDropdown } from './FilterDropdown';
+} from "../ui/dropdown-menu";
+import { FilterDropdown } from "./FilterDropdown";
 
 export interface DataTableFilter {
   key: string;
@@ -23,7 +23,7 @@ export interface DataTableFilter {
   }[];
 }
 
-interface DataTableToolbarProps<TData, TValue> {
+interface DataTableToolbarProps<TData, _TValue> {
   table: Table<TData>;
 
   toolbar?: React.ReactNode;
@@ -56,7 +56,7 @@ export function DataTableToolbar<TData, TValue>({
 
   search,
   searchKey,
-  searchPlaceholder = 'Search...',
+  searchPlaceholder = "Search...",
 
   manualSearch = false,
   enableRefresh = false,
@@ -70,8 +70,8 @@ export function DataTableToolbar<TData, TValue>({
   onSearchChange,
 }: DataTableToolbarProps<TData, TValue>) {
   const searchValue = manualSearch
-    ? (search ?? '')
-    : ((table.getColumn(searchKey ?? '')?.getFilterValue() as string) ?? '');
+    ? (search ?? "")
+    : ((table.getColumn(searchKey ?? "")?.getFilterValue() as string) ?? "");
 
   const handleSearch = (value: string) => {
     if (manualSearch) {
@@ -124,7 +124,7 @@ export function DataTableToolbar<TData, TValue>({
         )}
         {enableColumnVisibility && (
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger>
               <Button variant="outline">
                 <SlidersHorizontal className="mr-2 h-4 w-4" />
                 Columns
@@ -139,13 +139,13 @@ export function DataTableToolbar<TData, TValue>({
                   <DropdownMenuCheckboxItem
                     key={column.id}
                     checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(Boolean(value))}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(Boolean(value))
+                    }
                     className="capitalize"
                   >
-                   {
-  ((column.columnDef.meta as { label?: string })?.label) ??
-    column.id.replace(/([A-Z])/g, ' $1')
-}
+                    {(column.columnDef.meta as { label?: string })?.label ??
+                      column.id.replace(/([A-Z])/g, " $1")}
                   </DropdownMenuCheckboxItem>
                 ))}
             </DropdownMenuContent>

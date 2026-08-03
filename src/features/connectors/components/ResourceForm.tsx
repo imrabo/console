@@ -3,7 +3,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createResourceSchema, CreateResourceFormValues, updateResourceSchema } from '../schemas';
+import { createResourceSchema, type CreateResourceFormValues, updateResourceSchema } from '../schemas';
 import { ResourceCategoryEnum, ResourceFileTypeEnum } from '../types/resources.types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -40,7 +40,6 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
     handleSubmit,
     formState: { errors },
     watch,
-    control,
   } = useForm<CreateResourceFormValues>({
     resolver: zodResolver(schema) as any,
     defaultValues: {

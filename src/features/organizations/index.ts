@@ -1,4 +1,4 @@
-export * from './pages/CommunitiesPage';
+export * from './pages/OrganizationsPage';
 export * from './hooks/useCommunity';
 export * from './types';
 export * from './schemas';

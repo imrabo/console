@@ -34,7 +34,7 @@ export class ApiClient {
   private baseUrl: string;
   private timeout: number = 30000;
 
-  constructor(baseUrl: string = process.env.NEXT_PUBLIC_API_URL || '/api') {
+  constructor(baseUrl: string = import.meta.env.VITE_PUBLIC_API_URL) {
     this.baseUrl = baseUrl;
   }
 

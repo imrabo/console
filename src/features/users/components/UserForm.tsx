@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 
 import {
   Select,
@@ -16,34 +16,40 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 
-import { Gender, MembershipType, ThemeMode, UserStatus } from '../types/users.enums';
+import { Gender, MembershipType, UserStatus } from "../types/users.enums";
 
-import { User, Calendar, Shield, Users, Settings } from 'lucide-react';
+import { User, Calendar, Shield } from "lucide-react";
 
-import { userFormSchema, UserFormValues } from '../schemas';
+import { userFormSchema, type UserFormValues } from "../schemas";
 
-import { SubmitHandler } from 'react-hook-form';
-import { FormWrapper } from '@/components/wrappers/FormWrapper';
+import type { SubmitHandler } from "react-hook-form";
+import { FormWrapper } from "@/components/wrappers/FormWrapper";
 
 interface UserFormProps {
-  mode: 'create' | 'edit';
+  mode: "create" | "edit";
   defaultValues?: Partial<UserFormValues>;
   onSubmit: SubmitHandler<UserFormValues>;
   onCancel?: () => void;
   isSubmitting?: boolean;
 }
 
-export function UserForm({ mode, defaultValues, onSubmit, onCancel, isSubmitting }: UserFormProps) {
+export function UserForm({
+  mode,
+  defaultValues,
+  onSubmit,
+  onCancel,
+  isSubmitting,
+}: UserFormProps) {
   // const { register } = useFormContext<UserFormValues>();
   const form = useForm<UserFormValues>({
     resolver: zodResolver(userFormSchema),
 
     defaultValues: {
-      fullName: '',
-      email: '',
-      mobileNo: '',
+      fullName: "",
+      email: "",
+      mobileNo: "",
       membershipType: MembershipType.FREE,
 
       status: UserStatus.ACTIVE,
@@ -60,8 +66,6 @@ export function UserForm({ mode, defaultValues, onSubmit, onCancel, isSubmitting
       ...defaultValues,
     },
   });
-
-  let values = form.watch();
 
   useEffect(() => {
     if (defaultValues) {
@@ -81,12 +85,12 @@ export function UserForm({ mode, defaultValues, onSubmit, onCancel, isSubmitting
     <FormProvider {...form}>
       <FormWrapper
         form={form}
-        title={mode === 'create' ? 'Create User' : 'Edit User'}
+        title={mode === "create" ? "Create User" : "Edit User"}
         description="Manage user profile information."
 
         submitting={isSubmitting}
 
-        submitLabel={mode === 'create' ? 'Create User' : 'Save Changes'}
+        submitLabel={mode === "create" ? "Create User" : "Save Changes"}
 
         onCancel={onCancel}
       >
@@ -105,25 +109,31 @@ export function UserForm({ mode, defaultValues, onSubmit, onCancel, isSubmitting
               <div>
                 <label>Full Name</label>
 
-                <Input {...form.register('fullName')} />
+                <Input {...form.register("fullName")} />
 
-                <p className="text-sm text-red-500">{form.formState.errors.fullName?.message}</p>
+                <p className="text-sm text-red-500">
+                  {form.formState.errors.fullName?.message}
+                </p>
               </div>
 
               <div>
                 <label>Email</label>
 
-                <Input type="email" {...form.register('email')} />
+                <Input type="email" {...form.register("email")} />
 
-                <p className="text-sm text-red-500">{form.formState.errors.email?.message}</p>
+                <p className="text-sm text-red-500">
+                  {form.formState.errors.email?.message}
+                </p>
               </div>
 
               <div>
                 <label>Mobile</label>
 
-                <Input {...form.register('mobileNo')} />
+                <Input {...form.register("mobileNo")} />
 
-                <p className="text-sm text-red-500">{form.formState.errors.mobileNo?.message}</p>
+                <p className="text-sm text-red-500">
+                  {form.formState.errors.mobileNo?.message}
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -143,8 +153,8 @@ export function UserForm({ mode, defaultValues, onSubmit, onCancel, isSubmitting
                 <label>Gender</label>
 
                 <Select
-                  value={form.watch('gender')}
-                  onValueChange={(v) => form.setValue('gender', v as Gender)}
+                  value={form.watch("gender")}
+                  onValueChange={(v) => form.setValue("gender", v as Gender)}
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -177,8 +187,10 @@ export function UserForm({ mode, defaultValues, onSubmit, onCancel, isSubmitting
                 <label>Status</label>
 
                 <Select
-                  value={form.watch('status')}
-                  onValueChange={(v) => form.setValue('status', v as UserStatus)}
+                  value={form.watch("status")}
+                  onValueChange={(v) =>
+                    form.setValue("status", v as UserStatus)
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -187,7 +199,9 @@ export function UserForm({ mode, defaultValues, onSubmit, onCancel, isSubmitting
                   <SelectContent>
                     <SelectItem value={UserStatus.ACTIVE}>Active</SelectItem>
 
-                    <SelectItem value={UserStatus.SUSPENDED}>Suspended</SelectItem>
+                    <SelectItem value={UserStatus.SUSPENDED}>
+                      Suspended
+                    </SelectItem>
 
                     <SelectItem value={UserStatus.BANNED}>Banned</SelectItem>
                   </SelectContent>
@@ -196,16 +210,16 @@ export function UserForm({ mode, defaultValues, onSubmit, onCancel, isSubmitting
 
               <div className="flex items-center gap-3">
                 <Checkbox
-                  checked={form.watch('isActive')}
-                  onCheckedChange={(v) => form.setValue('isActive', !!v)}
+                  checked={form.watch("isActive")}
+                  onCheckedChange={(v) => form.setValue("isActive", !!v)}
                 />
                 Active User
               </div>
 
               <div className="flex items-center gap-3">
                 <Checkbox
-                  checked={form.watch('isExpert')}
-                  onCheckedChange={(v) => form.setValue('isExpert', !!v)}
+                  checked={form.watch("isExpert")}
+                  onCheckedChange={(v) => form.setValue("isExpert", !!v)}
                 />
                 Expert User
               </div>
@@ -232,8 +246,10 @@ export function UserForm({ mode, defaultValues, onSubmit, onCancel, isSubmitting
             <label>Membership</label>
 
             <Select
-              value={form.watch('membershipType')}
-              onValueChange={(v) => form.setValue('membershipType', v as MembershipType)}
+              value={form.watch("membershipType")}
+              onValueChange={(v) =>
+                form.setValue("membershipType", v as MembershipType)
+              }
             >
               <SelectTrigger>
                 <SelectValue />
@@ -295,10 +311,17 @@ export function UserForm({ mode, defaultValues, onSubmit, onCancel, isSubmitting
             </Button>
 
             <Button type="submit" disabled={isSubmitting}>
-              {mode === 'create' ? 'Create User' : 'Update User'}
+              {mode === "create" ? "Create User" : "Update User"}
             </Button>
           </div>
-          {process.env.NODE_ENV === 'development' && (
+        </form>
+      </FormWrapper>
+    </FormProvider>
+  );
+}
+
+/* 
+ {process.env.NODE_ENV === "development" && (
             <Card className="border-dashed">
               <CardHeader>
                 <CardTitle>React Hook Form Debug</CardTitle>
@@ -308,9 +331,9 @@ export function UserForm({ mode, defaultValues, onSubmit, onCancel, isSubmitting
                 <div>
                   <h3 className="mb-2 font-semibold">Values</h3>
 
-                  {/* <pre className="bg-muted overflow-auto rounded p-4">
+                  { <pre className="bg-muted overflow-auto rounded p-4">
                   {JSON.stringify(form.watch(), null, 2)}
-                </pre> */}
+                </pre> }
                 </div>
 
                 <div>
@@ -350,15 +373,12 @@ export function UserForm({ mode, defaultValues, onSubmit, onCancel, isSubmitting
                         submitCount: form.formState.submitCount,
                       },
                       null,
-                      2
+                      2,
                     )}
                   </pre>
                 </div>
               </CardContent>
             </Card>
           )}
-        </form>
-      </FormWrapper>
-    </FormProvider>
-  );
-}
+
+*/
