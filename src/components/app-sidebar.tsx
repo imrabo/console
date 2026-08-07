@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
+import { version } from "../../package.json"; // Adjust the relative path to your project root
+
 import {
   Sidebar,
   SidebarContent,
@@ -36,14 +38,13 @@ const data = {
   navMain: [
     { title: "Dashboard", url: "/", icon: LayoutDashboardIcon },
     { title: "Users", url: "/users", icon: UsersIcon },
-    { title: "Organizations", url: "/communities", icon: Menu },
+    { title: "Organizations", url: "/organizations", icon: Menu },
     { title: "Agents", url: "/agents", icon: CalendarIcon },
-    { title: "Feed", url: "/feed", icon: RssIcon },
-    { title: "Memorys", url: "/memorys", icon: VideoIcon },
-    { title: "Resources", url: "/resources", icon: FileTextIcon },
-    { title: "Moderation", url: "/moderation", icon: LogsIcon },
+    { title: "Connectors", url: "/connectors", icon: RssIcon },
+    { title: "Payments", url: "/payments", icon: VideoIcon },
+    { title: "Notifications", url: "/notifications", icon: VideoIcon },
+
     { title: "Team", url: "/admins", icon: Crown },
-    { title: "Settings", url: "/settings", icon: Settings2Icon },
   ],
 };
 
@@ -68,7 +69,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
                 <div className="flex flex-col leading-none">
                   <span className="text-base font-semibold">Imrabo</span>
                   <span className="text-muted-foreground text-xs">
-                    Admin Console
+                    Admin Console v{version}
                   </span>
                 </div>
               </Link>

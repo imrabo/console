@@ -9,11 +9,11 @@ interface LoginRequest {
 
 export const authService = {
     login: (data: LoginRequest) =>
-        apiClient.post<IAdminUser>('/auth/login', data),
+        apiClient.post<IAdminUser>('/auth/admin/login', data),
 
     logout: () =>
-        apiClient.post<void>('/auth/logout', {}),
+        apiClient.post<void>('/auth/admin/logout', {}),
 
     getCurrentUser: () =>
-        apiClient.get<IAdminUser | null>('/auth/me'),
+        apiClient.get<IAdminUser | null>('/auth/admin/me'),
 };

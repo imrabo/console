@@ -35,6 +35,10 @@ import NotificationsPage from "./features/notifications/pages/NotificationsPage"
 // Payments
 import PaymentsPage from "./features/payments/pages/PaymentsPage";
 import ProfilePage from "./features/users/pages/ProfilePage";
+import AgentsPage from "./features/agents/pages/AgentsPage";
+import { OrganizationsPage } from "./features/organizations";
+import OrganizationDetailsPage from "./features/organizations/pages/OrganizationDetailsPage";
+import OrganizationEditPage from "./features/organizations/pages/OrganizationEditPage";
 
 export const router = createBrowserRouter([
   {
@@ -80,28 +84,28 @@ export const router = createBrowserRouter([
         ],
       },
 
-      // {
-      //   path: "organizations",
-      //   children: [
-      //     {
-      //       index: true,
-      //       element: <OrganizationsPage />,
-      //     },
-      //     {
-      //       path: ":id",
-      //       element: <OrganizationDetailsPage />,
-      //     },
-      //     {
-      //       path: ":id/edit",
-      //       element: <OrganizationEditPage />,
-      //     },
-      //   ],
-      // },
+      {
+        path: "organizations",
+        children: [
+          {
+            index: true,
+            element: <OrganizationsPage />,
+          },
+          {
+            path: ":id",
+            element: <OrganizationDetailsPage />,
+          },
+          {
+            path: ":id/edit",
+            element: <OrganizationEditPage />,
+          },
+        ],
+      },
 
-      // {
-      //   path: "agents",
-      //   element: <AgentsPage />,
-      // },
+      {
+        path: "agents",
+        element: <AgentsPage />,
+      },
 
       {
         path: "memory",
@@ -130,6 +134,11 @@ export const router = createBrowserRouter([
       {
         path: "payments",
         element: <PaymentsPage />,
+      },
+
+      {
+        path: "notifications",
+        element: <NotificationsPage />,
       },
     ],
   },

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Children, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
@@ -7,7 +7,7 @@ import { Toaster } from "sonner";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-export default function AppProviders(): React.JSX.Element {
+export default function AppProviders({ children }: { children: React.ReactNode }): React.JSX.Element {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
@@ -15,7 +15,7 @@ export default function AppProviders(): React.JSX.Element {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <AuthProvider>
-            <Outlet />
+            {Children.toArray(children)}
             <Toaster position="top-center" richColors />
           </AuthProvider>
         </TooltipProvider>

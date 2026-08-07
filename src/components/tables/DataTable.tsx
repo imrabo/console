@@ -176,7 +176,7 @@ export function DataTable<TData, TValue>({
         enableExportCSV={true}
       />
 
-      <div className="bg-card my-5 overflow-hidden rounded-xl border">
+      <div className="bg-card my-5 overflow-hidden rounded-none border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

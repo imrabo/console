@@ -1,16 +1,17 @@
-import React, { createContext, useEffect } from "react";
+import React, { createContext, useEffect, type ReactNode } from "react";
 
 import type { IAdminUser } from "@/features/admins";
 import { authService } from "@/features/auth/services/authService";
 import { useAuthStore } from "@/lib/store/authStore";
-import { Outlet } from "react-router-dom";
 
 export interface AuthContextType {
   user: IAdminUser | null;
   isLoading: boolean;
 
   login: (email: string, password: string) => Promise<IAdminUser>;
+
   logout: () => Promise<void>;
+
   refreshUser: () => Promise<void>;
 }
 
@@ -18,7 +19,11 @@ export const AuthContext = createContext<AuthContextType | undefined>(
   undefined,
 );
 
-export const AuthProvider: React.FC = () => {
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const { user, isLoading, setUser, setLoading } = useAuthStore();
 
   useEffect(() => {
@@ -51,7 +56,6 @@ export const AuthProvider: React.FC = () => {
       });
 
       setUser(adminUser);
-
       return adminUser;
     } catch (error) {
       setUser(null);
@@ -91,7 +95,7 @@ export const AuthProvider: React.FC = () => {
         refreshUser,
       }}
     >
-      <Outlet />
+      {children}
     </AuthContext.Provider>
   );
 };
