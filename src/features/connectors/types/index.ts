@@ -1,6 +1,6 @@
-export * from './resources.types';
+export * from './connector.types';
 
-export interface ResourceFile {
+export interface ConnectorFile {
   id: string;
   title: string;
   category: string;

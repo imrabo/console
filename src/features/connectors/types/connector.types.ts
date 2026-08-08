@@ -1,8 +1,8 @@
 /**
- * Resource type definitions based on ResourcesEntity model
+ * Connector type definitions based on ConnectorsEntity model
  */
 
-export interface Resource {
+export interface Connector {
   id: string;
   title: string;
   description: string;
@@ -17,7 +17,7 @@ export interface Resource {
   updatedAt?: Date | string;
 }
 
-export interface ResourceFilters {
+export interface ConnectorFilters {
   search?: string;
   category?: string;
   fileType?: string;
@@ -29,7 +29,7 @@ export interface ResourceFilters {
   createdBefore?: Date | string;
 }
 
-export interface ResourceCategory {
+export interface ConnectorCategory {
   id: string;
   name: string;
   description?: string;
@@ -37,27 +37,27 @@ export interface ResourceCategory {
   color?: string;
 }
 
-export interface ResourceStats {
-  totalResources: number;
+export interface ConnectorStats {
+  totalConnectors: number;
   totalDownloads: number;
   mostPopularCategory: string;
-  mostDownloadedResource: Resource | null;
-  premiumResources: number;
-  freeResources: number;
+  mostDownloadedConnector: Connector | null;
+  premiumConnectors: number;
+  freeConnectors: number;
 }
 
-export type CreateResourceInput = Omit<Resource, 'id' | 'createdAt' | 'updatedAt' | 'downloads'>;
-export type UpdateResourceInput = Partial<Omit<Resource, 'id' | 'createdAt' | 'creatorId'>>;
+export type CreateConnectorInput = Omit<Connector, 'id' | 'createdAt' | 'updatedAt' | 'downloads'>;
+export type UpdateConnectorInput = Partial<Omit<Connector, 'id' | 'createdAt' | 'creatorId'>>;
 
-// Re-export enums from resources.enums for backward compatibility
+// Re-export enums from connectors.enums for backward compatibility
 export {
-  ResourceCategory as ResourceCategoryEnum,
-  ResourceFileType as ResourceFileTypeEnum,
-  ResourceStatus,
-  ResourceVisibility,
+  ConnectorCategory as ConnectorCategoryEnum,
+  ConnectorFileType as ConnectorFileTypeEnum,
+  ConnectorStatus,
+  ConnectorVisibility,
   CATEGORY_OPTIONS,
   FILE_TYPE_OPTIONS,
   FILE_TYPE_MIME_MAP,
   ALLOWED_EXTENSIONS,
   MAX_FILE_SIZE,
-} from './resources.enums';
+} from './connector.enums';

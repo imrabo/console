@@ -39,7 +39,7 @@ const navItems = [
   },
   { label: "Agents", href: "/agents", icon: CalendarIcon },
   { label: "Feed", href: "/feed", icon: MessageSquareIcon },
-  { label: "Resources", href: "/resources", icon: FileTextIcon },
+  { label: "Connectors", href: "/connectors", icon: FileTextIcon },
   { label: "Memorys", href: "/memorys", icon: VideoIcon },
   { label: "Memberships", href: "/memberships", icon: CreditCardIcon },
   { label: "Notifications", href: "/notifications", icon: BellIcon },

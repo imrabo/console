@@ -1,80 +1,92 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { createResourceSchema, type CreateResourceFormValues, updateResourceSchema } from '../schemas';
-import { ResourceCategoryEnum, ResourceFileTypeEnum } from '../types/resources.types';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Switch } from '@/components/ui/switch';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  createConnectorSchema,
+  type CreateConnectorFormValues,
+  updateConnectorSchema,
+} from "../schemas";
+import {
+  ConnectorCategoryEnum,
+  ConnectorFileTypeEnum,
+} from "../types/connector.types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 
-interface ResourceFormProps {
-  onSubmit: (values: CreateResourceFormValues) => void;
+interface ConnectorFormProps {
+  onSubmit: (values: CreateConnectorFormValues) => void;
   onCancel: () => void;
   isSubmitting?: boolean;
-  defaultValues?: Partial<CreateResourceFormValues>;
+  defaultValues?: Partial<CreateConnectorFormValues>;
   isEditMode?: boolean;
 }
 
-export const ResourceForm: React.FC<ResourceFormProps> = ({
+export const ConnectorForm: React.FC<ConnectorFormProps> = ({
   onSubmit,
   onCancel,
   isSubmitting = false,
   defaultValues = {},
   isEditMode = false,
 }) => {
-  const schema = isEditMode ? updateResourceSchema : createResourceSchema;
+  const schema = isEditMode ? updateConnectorSchema : createConnectorSchema;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<CreateResourceFormValues>({
+  } = useForm<CreateConnectorFormValues>({
     resolver: zodResolver(schema) as any,
     defaultValues: {
-      title: '',
-      description: '',
-      category: ResourceCategoryEnum.GUIDES,
-      fileType: ResourceFileTypeEnum.PDF,
-      thumbnail: '',
-      url: '',
+      title: "",
+      description: "",
+      category: ConnectorCategoryEnum.GUIDES,
+      fileType: ConnectorFileTypeEnum.PDF,
+      thumbnail: "",
+      url: "",
       isPremium: false,
-      creatorId: '',
+      creatorId: "",
       ...defaultValues,
     },
   });
 
-  const isPremium = watch('isPremium');
+  const isPremium = watch("isPremium");
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-left font-sans">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6 text-left font-sans"
+    >
       {/* Title */}
       <div className="space-y-1">
         <Label
           htmlFor="title"
           className="text-muted-foreground text-xs font-bold tracking-wider uppercase"
         >
-          Resource Title
+          Connector Title
         </Label>
         <Input
           id="title"
-          placeholder="Enter resource title (e.g., Toddler Milestone Tracker)"
+          placeholder="Enter connector title (e.g., Toddler Milestone Tracker)"
           className="h-10 focus-visible:ring-indigo-500/30"
-          {...register('title')}
+          {...register("title")}
         />
         {errors.title && (
-          <p className="text-destructive text-xs font-semibold">{errors.title.message as string}</p>
+          <p className="text-destructive text-xs font-semibold">
+            {errors.title.message as string}
+          </p>
         )}
       </div>
 
@@ -88,9 +100,9 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
         </Label>
         <Textarea
           id="description"
-          placeholder="Enter a detailed description of the resource..."
+          placeholder="Enter a detailed description of the connector..."
           className="min-h-[100px] focus-visible:ring-indigo-500/30"
-          {...register('description')}
+          {...register("description")}
         />
         {errors.description && (
           <p className="text-destructive text-xs font-semibold">
@@ -109,12 +121,15 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
           >
             Category
           </Label>
-          <Select {...register('category')} defaultValue={defaultValues.category}>
+          <Select
+            {...register("category")}
+            defaultValue={defaultValues.category}
+          >
             <SelectTrigger className="h-10 focus-visible:ring-indigo-500/30">
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
             <SelectContent>
-              {Object.values(ResourceCategoryEnum).map((category) => (
+              {Object.values(ConnectorCategoryEnum).map((category) => (
                 <SelectItem key={category} value={category}>
                   {category}
                 </SelectItem>
@@ -136,12 +151,15 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
           >
             File Type
           </Label>
-          <Select {...register('fileType')} defaultValue={defaultValues.fileType}>
+          <Select
+            {...register("fileType")}
+            defaultValue={defaultValues.fileType}
+          >
             <SelectTrigger className="h-10 focus-visible:ring-indigo-500/30">
               <SelectValue placeholder="Select file type" />
             </SelectTrigger>
             <SelectContent>
-              {Object.values(ResourceFileTypeEnum).map((fileType) => (
+              {Object.values(ConnectorFileTypeEnum).map((fileType) => (
                 <SelectItem key={fileType} value={fileType}>
                   {fileType}
                 </SelectItem>
@@ -158,11 +176,16 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
         {/* Premium Toggle */}
         <div className="space-y-1">
           <Label className="text-muted-foreground text-xs font-bold tracking-wider uppercase">
-            Premium Resource
+            Premium Connector
           </Label>
           <div className="flex items-center space-x-2">
-            <Switch {...register('isPremium')} defaultChecked={defaultValues.isPremium} />
-            <span className="text-xs font-medium">{isPremium ? 'Premium (Paid)' : 'Free'}</span>
+            <Switch
+              {...register("isPremium")}
+              defaultChecked={defaultValues.isPremium}
+            />
+            <span className="text-xs font-medium">
+              {isPremium ? "Premium (Paid)" : "Free"}
+            </span>
           </div>
         </div>
       </div>
@@ -181,38 +204,40 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
             id="thumbnail"
             placeholder="https://example.com/thumbnail.jpg"
             className="h-10 focus-visible:ring-indigo-500/30"
-            {...register('thumbnail')}
+            {...register("thumbnail")}
           />
           {errors.thumbnail && (
             <p className="text-destructive text-xs font-semibold">
               {errors.thumbnail.message as string}
             </p>
           )}
-          {watch('thumbnail') && (
+          {watch("thumbnail") && (
             <img
-              src={watch('thumbnail')}
+              src={watch("thumbnail")}
               alt="Thumbnail preview"
               className="mt-2 h-20 w-20 rounded-lg object-cover"
             />
           )}
         </div>
 
-        {/* Resource URL */}
+        {/* Connector URL */}
         <div className="space-y-1">
           <Label
             htmlFor="url"
             className="text-muted-foreground text-xs font-bold tracking-wider uppercase"
           >
-            Resource URL
+            Connector URL
           </Label>
           <Input
             id="url"
-            placeholder="https://example.com/resource.pdf"
+            placeholder="https://example.com/connector.pdf"
             className="h-10 focus-visible:ring-indigo-500/30"
-            {...register('url')}
+            {...register("url")}
           />
           {errors.url && (
-            <p className="text-destructive text-xs font-semibold">{errors.url.message as string}</p>
+            <p className="text-destructive text-xs font-semibold">
+              {errors.url.message as string}
+            </p>
           )}
         </div>
       </div>
@@ -230,7 +255,7 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
             id="creatorId"
             placeholder="Creator user ID"
             className="h-10 focus-visible:ring-indigo-500/30"
-            {...register('creatorId')}
+            {...register("creatorId")}
             readOnly
           />
         </div>
@@ -238,7 +263,12 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
 
       {/* Submit Buttons */}
       <div className="border-border/50 flex justify-end gap-2 border-t pt-4">
-        <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onCancel}
+          disabled={isSubmitting}
+        >
           Cancel
         </Button>
         <Button
@@ -246,11 +276,15 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
           disabled={isSubmitting}
           className="bg-indigo-600 text-white hover:bg-indigo-700"
         >
-          {isSubmitting ? 'Saving...' : isEditMode ? 'Update Resource' : 'Create Resource'}
+          {isSubmitting
+            ? "Saving..."
+            : isEditMode
+              ? "Update Connector"
+              : "Create Connector"}
         </Button>
       </div>
     </form>
   );
 };
 
-export default ResourceForm;
+export default ConnectorForm;

@@ -31,6 +31,14 @@
     "noFallthroughCasesInSwitch": true,
   },
   "include": [
-    "src"
+    "src",
+    "../frontend/src/lib/store",
+    "../frontend/src/lib/errors.ts",
+    "../frontend/src/lib/utils.ts",
+    "../frontend/src/lib/api",
+    "../frontend/src/lib/auth",
+    "../frontend/src/lib/constants",
+    "../frontend/src/types",
+    "../frontend/src/providers"
   ]
 }

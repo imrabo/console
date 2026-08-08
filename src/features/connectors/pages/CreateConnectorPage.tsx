@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCreateResourceMutation } from "../hooks/useResources";
-import { CreateResourceForm } from "../components/CreateResourceForm";
+import { useCreateConnectorMutation } from "../hooks/useConnector";
+import { CreateConnectorForm } from "../components/CreateConnectorForm";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
 import { toast } from "sonner";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 
-export const CreateResourcePage: React.FC = () => {
+export const CreateConnectorPage: React.FC = () => {
   const router = useNavigate();
   const { user: currentUser } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { mutate: createResource } = useCreateResourceMutation();
+  const { mutate: createConnector } = useCreateConnectorMutation();
 
   const handleSubmit = (values: any) => {
     setIsSubmitting(true);
@@ -27,21 +27,23 @@ export const CreateResourcePage: React.FC = () => {
       downloads: 0,
     };
 
-    createResource(submissionData as any, {
-      onSuccess: (newResource) => {
+    createConnector(submissionData as any, {
+      onSuccess: (newConnector) => {
         setIsSubmitting(false);
-        toast.success(`Resource "${newResource.title}" created successfully!`);
-        router("/resources");
+        toast.success(
+          `Connector "${newConnector.title}" created successfully!`,
+        );
+        router("/connectors");
       },
       onError: (error: any) => {
         setIsSubmitting(false);
-        toast.error(error.message || "Failed to create resource");
+        toast.error(error.message || "Failed to create connector");
       },
     });
   };
 
   const handleCancel = () => {
-    router("/resources");
+    router("/connectors");
   };
 
   return (
@@ -58,7 +60,7 @@ export const CreateResourcePage: React.FC = () => {
         </Button>
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight">
-            Create New Resource
+            Create New Connector
           </h1>
           <p className="text-muted-foreground text-sm font-medium">
             Add educational materials, templates, or digital downloads to the
@@ -69,7 +71,7 @@ export const CreateResourcePage: React.FC = () => {
 
       {/* Form */}
       <div className="bg-card border-border rounded-xl border p-6 shadow-sm">
-        <CreateResourceForm
+        <CreateConnectorForm
           onSubmit={handleSubmit}
           onCancel={handleCancel}
           isSubmitting={isSubmitting}
@@ -82,4 +84,4 @@ export const CreateResourcePage: React.FC = () => {
   );
 };
 
-export default CreateResourcePage;
+export default CreateConnectorPage;

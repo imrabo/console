@@ -1,9 +1,9 @@
 /**
- * Enums for Resource-related types
- * These enums provide type safety for fixed value sets in the resource domain
+ * Enums for Connector-related types
+ * These enums provide type safety for fixed value sets in the connector domain
  */
 
-export enum ResourceCategory {
+export enum ConnectorCategory {
   GUIDES = 'Guides',
   TEMPLATES = 'Templates',
   CHECKLISTS = 'Checklists',
@@ -16,7 +16,7 @@ export enum ResourceCategory {
   OTHER = 'Other',
 }
 
-export enum ResourceFileType {
+export enum ConnectorFileType {
   PDF = 'PDF',
   DOCX = 'DOCX',
   XLSX = 'XLSX',
@@ -30,40 +30,40 @@ export enum ResourceFileType {
   TEXT = 'TEXT',
 }
 
-export enum ResourceStatus {
+export enum ConnectorStatus {
   ACTIVE = 'active',
   INACTIVE = 'inactive',
   PENDING_REVIEW = 'pending_review',
   REJECTED = 'rejected',
 }
 
-export enum ResourceVisibility {
+export enum ConnectorVisibility {
   PUBLIC = 'public',
   PRIVATE = 'private',
   PREMIUM_ONLY = 'premium_only',
 }
 
 // Array of all category values for use in dropdowns
-export const CATEGORY_OPTIONS = Object.values(ResourceCategory);
+export const CATEGORY_OPTIONS = Object.values(ConnectorCategory);
 
 // Array of all file type values for use in dropdowns
-export const FILE_TYPE_OPTIONS = Object.values(ResourceFileType);
+export const FILE_TYPE_OPTIONS = Object.values(ConnectorFileType);
 
 // File type to MIME type mapping
-export const FILE_TYPE_MIME_MAP: Record<ResourceFileType, string> = {
-  [ResourceFileType.PDF]: 'application/pdf',
-  [ResourceFileType.DOCX]:
+export const FILE_TYPE_MIME_MAP: Record<ConnectorFileType, string> = {
+  [ConnectorFileType.PDF]: 'application/pdf',
+  [ConnectorFileType.DOCX]:
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  [ResourceFileType.XLSX]: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  [ResourceFileType.PPTX]:
+  [ConnectorFileType.XLSX]: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  [ConnectorFileType.PPTX]:
     'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-  [ResourceFileType.ZIP]: 'application/zip',
-  [ResourceFileType.PNG]: 'image/png',
-  [ResourceFileType.JPG]: 'image/jpeg',
-  [ResourceFileType.JPEG]: 'image/jpeg',
-  [ResourceFileType.MP4]: 'video/mp4',
-  [ResourceFileType.MP3]: 'audio/mpeg',
-  [ResourceFileType.TEXT]: 'text/plain',
+  [ConnectorFileType.ZIP]: 'application/zip',
+  [ConnectorFileType.PNG]: 'image/png',
+  [ConnectorFileType.JPG]: 'image/jpeg',
+  [ConnectorFileType.JPEG]: 'image/jpeg',
+  [ConnectorFileType.MP4]: 'video/mp4',
+  [ConnectorFileType.MP3]: 'audio/mpeg',
+  [ConnectorFileType.TEXT]: 'text/plain',
 };
 
 // Allowed file extensions for upload

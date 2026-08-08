@@ -45,7 +45,7 @@ const routeLabels: Record<string, string> = {
   agents: "Agents",
   feed: "Feed",
   memorys: "Memorys",
-  resources: "Resources",
+  connectors: "Connectors",
   memberships: "Memberships",
   coins: "Coins",
   notifications: "Notifications",

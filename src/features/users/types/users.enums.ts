@@ -30,6 +30,6 @@ export enum EmailPreferenceType {
   VILLAGES = 'communities',
   MEETUPS = 'agents',
   FEED = 'feed',
-  RESOURCES = 'resources',
+  RESOURCES = 'connectors',
   PROFILE = 'profile',
 }

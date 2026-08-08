@@ -1,32 +1,32 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import resourcesService from '../services/resourcesService';
+import resourcesService from '../services/connectorService';
 import { toast } from 'sonner';
-import type { ResourceFilters } from '../types/resources.types';
-import type { CreateResourceFormValues, UpdateResourceFormValues } from '../schemas';
+import type { ConnectorFilters } from '../types/connector.types';
+import type { CreateConnectorFormValues, UpdateConnectorFormValues } from '../schemas';
 import { COLLECTIONS } from '@/lib/constants/COLLECTIONS';
 
 /**
- * Hook to fetch all resources with optional filters
+ * Hook to fetch all connectors with optional filters
  */
-export const useResourcesQuery = (filters?: ResourceFilters) => {
+export const useConnectorsQuery = (filters?: ConnectorFilters) => {
   return useQuery({
     queryKey: [COLLECTIONS.RESOURCES, filters],
     queryFn: () =>
-      resourcesService.fetchResources(
+      resourcesService.fetchConnectors(
         filters ? ({ ...filters } as Record<string, string | number | boolean | Date>) : undefined
       ),
   });
 };
 
 /**
- * Legacy hook to fetch both resources and products for backward compatibility
+ * Legacy hook to fetch both connectors and products for backward compatibility
  */
-export const useResourcesAndProductsQuery = () => {
+export const useConnectorsAndProductsQuery = () => {
   return useQuery({
-    queryKey: ['resources-and-products'],
+    queryKey: ['connectors-and-products'],
     queryFn: async () => {
       const [files, products] = await Promise.all([
-        resourcesService.fetchFileResources(),
+        resourcesService.fetchFileConnectors(),
         resourcesService.fetchProducts(),
       ]);
       return { files, products };
@@ -35,77 +35,77 @@ export const useResourcesAndProductsQuery = () => {
 };
 
 /**
- * Hook to fetch a single resource by ID
+ * Hook to fetch a single connector by ID
  */
-export const useResourceQuery = (id: string) => {
+export const useConnectorQuery = (id: string) => {
   return useQuery({
     queryKey: [COLLECTIONS.RESOURCES, id],
-    queryFn: () => resourcesService.fetchResourceById(id),
+    queryFn: () => resourcesService.fetchConnectorById(id),
     enabled: !!id,
   });
 };
 
 /**
- * Hook to fetch resources by creator
+ * Hook to fetch connectors by creator
  */
-export const useResourcesByCreatorQuery = (creatorId: string) => {
+export const useConnectorsByCreatorQuery = (creatorId: string) => {
   return useQuery({
     queryKey: [COLLECTIONS.RESOURCES, 'by-creator', creatorId],
-    queryFn: () => resourcesService.fetchResourcesByCreator(creatorId),
+    queryFn: () => resourcesService.fetchConnectorsByCreator(creatorId),
     enabled: !!creatorId,
   });
 };
 
 /**
- * Hook to fetch resource statistics
+ * Hook to fetch connector statistics
  */
-export const useResourceStatsQuery = () => {
+export const useConnectorStatsQuery = () => {
   return useQuery({
     queryKey: [COLLECTIONS.RESOURCES, 'stats'],
-    queryFn: () => resourcesService.getResourceStats(),
+    queryFn: () => resourcesService.getConnectorStats(),
   });
 };
 
 /**
- * Hook to fetch popular resources
+ * Hook to fetch popular connectors
  */
-export const usePopularResourcesQuery = (limit: number = 10) => {
+export const usePopularConnectorsQuery = (limit: number = 10) => {
   return useQuery({
     queryKey: [COLLECTIONS.RESOURCES, 'popular', limit],
-    queryFn: () => resourcesService.getPopularResources(limit),
+    queryFn: () => resourcesService.getPopularConnectors(limit),
   });
 };
 
 /**
- * Hook to fetch recent resources
+ * Hook to fetch recent connectors
  */
-export const useRecentResourcesQuery = (limit: number = 10) => {
+export const useRecentConnectorsQuery = (limit: number = 10) => {
   return useQuery({
     queryKey: [COLLECTIONS.RESOURCES, 'recent', limit],
-    queryFn: () => resourcesService.getRecentResources(limit),
+    queryFn: () => resourcesService.getRecentConnectors(limit),
   });
 };
 
 /**
- * Hook to create a new resource
+ * Hook to create a new connector
  */
-export const useCreateResourceMutation = () => {
+export const useCreateConnectorMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: CreateResourceFormValues) => resourcesService.createResource(data as any),
+    mutationFn: (data: CreateConnectorFormValues) => resourcesService.createConnector(data as any),
 
-    onSuccess: (newResource) => {
+    onSuccess: (newConnector) => {
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES] });
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, 'stats'] });
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, 'recent'] });
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, 'popular'] });
 
-      toast.success(`Resource "${newResource.title}" created successfully`);
+      toast.success(`Connector "${newConnector.title}" created successfully`);
     },
 
     onError: (err: any) => {
-      toast.error(err.message || 'Failed to create resource');
+      toast.error(err.message || 'Failed to create connector');
     },
   });
 };
@@ -118,7 +118,7 @@ export const useCreateProductMutation = () => {
   return useMutation({
     mutationFn: (data: any) => resourcesService.createProduct(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['resources-and-products'] });
+      queryClient.invalidateQueries({ queryKey: ['connectors-and-products'] });
       toast.success('Catalog product added successfully');
     },
     onError: (err: any) => {
@@ -128,52 +128,52 @@ export const useCreateProductMutation = () => {
 };
 
 /**
- * Hook to update an existing resource
+ * Hook to update an existing connector
  */
-export const useUpdateResourceMutation = () => {
+export const useUpdateConnectorMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: UpdateResourceFormValues }) =>
-      resourcesService.updateResource(id, data as any),
+    mutationFn: ({ id, data }: { id: string; data: UpdateConnectorFormValues }) =>
+      resourcesService.updateConnector(id, data as any),
 
-    onSuccess: (updatedResource) => {
+    onSuccess: (updatedConnector) => {
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES] });
-      queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, updatedResource.id] });
+      queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, updatedConnector.id] });
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, 'recent'] });
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, 'popular'] });
 
-      toast.success(`Resource "${updatedResource.title}" updated successfully`);
+      toast.success(`Connector "${updatedConnector.title}" updated successfully`);
     },
 
     onError: (err: any) => {
-      toast.error(err.message || 'Failed to update resource');
+      toast.error(err.message || 'Failed to update connector');
     },
   });
 };
 
 /**
- * Hook to delete a resource
+ * Hook to delete a connector
  */
-export const useDeleteResourceMutation = () => {
+export const useDeleteConnectorMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => resourcesService.deleteResource(id),
+    mutationFn: (id: string) => resourcesService.deleteConnector(id),
 
     onSuccess: (_, id) => {
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES] });
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, id] });
-      queryClient.invalidateQueries({ queryKey: ['resources-and-products'] });
+      queryClient.invalidateQueries({ queryKey: ['connectors-and-products'] });
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, 'stats'] });
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, 'recent'] });
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, 'popular'] });
 
-      toast.success('Resource deleted successfully');
+      toast.success('Connector deleted successfully');
     },
 
     onError: (err: any) => {
-      toast.error(err.message || 'Failed to delete resource');
+      toast.error(err.message || 'Failed to delete connector');
     },
   });
 };
@@ -186,7 +186,7 @@ export const useDeleteProductMutation = () => {
   return useMutation({
     mutationFn: (id: string) => resourcesService.deleteProduct(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['resources-and-products'] });
+      queryClient.invalidateQueries({ queryKey: ['connectors-and-products'] });
       toast.success('Product deleted from catalog');
     },
     onError: (err: any) => {
@@ -196,7 +196,7 @@ export const useDeleteProductMutation = () => {
 };
 
 /**
- * Hook to increment download count for a resource
+ * Hook to increment download count for a connector
  */
 export const useIncrementDownloadsMutation = () => {
   const queryClient = useQueryClient();
@@ -204,13 +204,13 @@ export const useIncrementDownloadsMutation = () => {
   return useMutation({
     mutationFn: (id: string) => resourcesService.incrementDownloads(id),
 
-    onSuccess: (updatedResource) => {
+    onSuccess: (updatedConnector) => {
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES] });
-      queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, updatedResource.id] });
+      queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, updatedConnector.id] });
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, 'stats'] });
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.RESOURCES, 'popular'] });
 
-      toast.success(`Download count incremented for "${updatedResource.title}"`);
+      toast.success(`Download count incremented for "${updatedConnector.title}"`);
     },
 
     onError: (err: any) => {

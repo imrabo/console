@@ -1,10 +1,10 @@
 import React from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 import {
-  useResourcesQuery,
-  useDeleteResourceMutation,
-} from "../hooks/useResources";
-import type { Resource } from "../types/resources.types";
+  useConnectorsQuery,
+  useDeleteConnectorMutation,
+} from "../hooks/useConnector";
+import type { Connector } from "../types/connector.types";
 import { DataTable } from "@/components/tables/DataTable";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -17,15 +17,13 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 
 import { MoreHorizontal, PlusCircle, Eye, Crown } from "lucide-react";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 
-export const ResourcesPage: React.FC = () => {
-  const { data: resources = [], isLoading } = useResourcesQuery();
-  const { mutate: deleteResource } = useDeleteResourceMutation();
+export const ConnectorsPage: React.FC = () => {
+  const { data: connectors = [], isLoading } = useConnectorsQuery();
+  const { mutate: deleteConnector } = useDeleteConnectorMutation();
   const router = useNavigate();
-  useAuth();
 
-  const columns: ColumnDef<Resource>[] = [
+  const columns: ColumnDef<Connector>[] = [
     {
       id: "serialNo",
       header: "Sr. No.",
@@ -35,20 +33,20 @@ export const ResourcesPage: React.FC = () => {
       accessorKey: "title",
       header: "Title",
       cell: ({ row }) => {
-        const resource = row.original;
+        const connector = row.original;
         return (
           <div className="flex items-center gap-3">
-            {resource.thumbnail && (
+            {connector.thumbnail && (
               <img
-                src={resource.thumbnail}
-                alt={resource.title}
+                src={connector.thumbnail}
+                alt={connector.title}
                 className="h-10 w-10 rounded-lg object-cover"
               />
             )}
             <div>
-              <p className="text-foreground font-bold">{resource.title}</p>
+              <p className="text-foreground font-bold">{connector.title}</p>
               <p className="text-muted-foreground max-w-[200px] truncate text-xs">
-                {resource.description}
+                {connector.description}
               </p>
             </div>
           </div>
@@ -108,7 +106,7 @@ export const ResourcesPage: React.FC = () => {
       id: "actions",
       header: "Actions",
       cell: ({ row }) => {
-        const resource = row.original;
+        const connector = row.original;
         return (
           <DropdownMenu>
             <DropdownMenuTrigger>
@@ -126,30 +124,30 @@ export const ResourcesPage: React.FC = () => {
             >
               <DropdownMenuItem
                 className="cursor-pointer rounded-md text-xs font-medium"
-                onClick={() => router(`/resources/${resource.id}`)}
+                onClick={() => router(`/connectors/${connector.id}`)}
               >
                 <Eye className="mr-2 h-3 w-3" />
                 View Details
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer rounded-md text-xs font-medium"
-                onClick={() => router(`/resources/${resource.id}/edit`)}
+                onClick={() => router(`/connectors/${connector.id}/edit`)}
               >
-                Edit Resource
+                Edit Connector
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="text-destructive cursor-pointer rounded-md text-xs font-medium"
                 onClick={() => {
                   if (
                     confirm(
-                      `Are you sure you want to delete "${resource.title}"?`,
+                      `Are you sure you want to delete "${connector.title}"?`,
                     )
                   ) {
-                    deleteResource(resource.id);
+                    deleteConnector(connector.id);
                   }
                 }}
               >
-                Delete Resource
+                Delete Connector
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -164,10 +162,10 @@ export const ResourcesPage: React.FC = () => {
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight">
-            Resources Management
+            Connectors Management
           </h1>
           <p className="text-muted-foreground mt-1 text-sm font-medium">
-            Manage digital resources, PDFs, templates, and educational
+            Manage digital connectors, PDFs, templates, and educational
             materials.
           </p>
         </div>
@@ -176,16 +174,16 @@ export const ResourcesPage: React.FC = () => {
       {/* Main Table Card */}
       <DataTable
         columns={columns}
-        data={resources}
+        data={connectors}
         searchKey="title"
-        searchPlaceholder="Search resources by title..."
+        searchPlaceholder="Search connectors by title..."
         loading={isLoading}
-        onRowClick={(resource) => router(`/resources/${resource.id}`)}
+        onRowClick={(connector) => router(`/connectors/${connector.id}`)}
         toolbar={
-          <Link to="/resources/create">
+          <Link to="/connectors/create">
             <Button className="flex items-center gap-2">
               <PlusCircle className="h-4 w-4" />
-              Add New Resource
+              Add New Connector
             </Button>
           </Link>
         } // Using the button in the header instead
@@ -194,4 +192,4 @@ export const ResourcesPage: React.FC = () => {
   );
 };
 
-export default ResourcesPage;
+export default ConnectorsPage;
