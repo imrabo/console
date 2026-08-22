@@ -260,7 +260,7 @@ export const MemorysPage: React.FC = () => {
       {/* Main Table Card */}
       <DataTable
         columns={columns}
-        data={data?.data ?? []}
+        data={data?.data?.data ?? []}
         searchKey="title"
         searchPlaceholder="Search memorys by title..."
         loading={isLoading}

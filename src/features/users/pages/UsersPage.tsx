@@ -94,7 +94,7 @@ export const UsersPage: React.FC = () => {
         const u = row.original;
         return (
           <DropdownMenu>
-            <DropdownMenuTrigger >
+            <DropdownMenuTrigger>
               <Button
                 variant="ghost"
                 size="icon"
@@ -129,7 +129,7 @@ export const UsersPage: React.FC = () => {
             Users Management
           </h1>
           <p className="text-muted-foreground mt-1 text-sm font-medium">
-            Browse registered communities, monitor system roles, and execute
+            Browse registered workspaces, monitor system roles, and execute
             safety controls.
           </p>
         </div>
@@ -138,7 +138,7 @@ export const UsersPage: React.FC = () => {
       {/* Main Table Card */}
       <DataTable
         columns={columns}
-        data={users ?? []}
+        data={users?.data ?? []}
         searchKey="fullName"
         searchPlaceholder="Search users by name..."
         loading={isLoading}

@@ -42,8 +42,8 @@ export const useUpdateMemoryMutation = () => {
       memorysService.updateMemory(id, data),
     onSuccess: (updated) => {
       queryClient.invalidateQueries({ queryKey: ['memorys-data'] });
-      queryClient.invalidateQueries({ queryKey: ['memory', updated.id] });
-      toast.success(`Memory updated: ${updated.title}`);
+      queryClient.invalidateQueries({ queryKey: ['memory', updated.data?.id] });
+      toast.success(`Memory updated: ${updated.data?.title || 'Untitled'}`);
     },
     onError: (err: any) => {
       toast.error(err.message || 'Failed to update memory details');
@@ -73,8 +73,8 @@ export const useUpdateMemoryStatusMutation = () => {
       memorysService.updateMemoryStatus(id, status),
     onSuccess: (updated) => {
       queryClient.invalidateQueries({ queryKey: ['memorys-data'] });
-      queryClient.invalidateQueries({ queryKey: ['memory', updated.id] });
-      toast.success(`Memory status updated: ${updated.status}`);
+      queryClient.invalidateQueries({ queryKey: ['memory', updated.data?.id] });
+      toast.success(`Memory status updated: ${updated.data?.status}`);
     },
     onError: (err: any) => {
       toast.error(err.message || 'Failed to update memory status');
@@ -89,8 +89,8 @@ export const useToggleMemoryFeaturedMutation = () => {
       memorysService.toggleMemoryFeatured(id, isFeatured),
     onSuccess: (updated: any) => {
       queryClient.invalidateQueries({ queryKey: ['memorys-data'] });
-      queryClient.invalidateQueries({ queryKey: ['memory', updated.id] });
-      toast.success(`Memory featured status updated: ${updated.isFeatured}`);
+      queryClient.invalidateQueries({ queryKey: ['memory', updated.data?.id] });
+      toast.success(`Memory featured status updated: ${updated.data?.isFeatured}`);
     },
     onError: (err: any) => {
       toast.error(err.message || 'Failed to update featured status');
@@ -105,8 +105,8 @@ export const useToggleMemoryActiveMutation = () => {
       memorysService.toggleMemoryActive(id, isActive),
     onSuccess: (updated: any) => {
       queryClient.invalidateQueries({ queryKey: ['memorys-data'] });
-      queryClient.invalidateQueries({ queryKey: ['memory', updated.id] });
-      toast.success(`Memory active status updated: ${updated.isActive}`);
+      queryClient.invalidateQueries({ queryKey: ['memory', updated.data?.id] });
+      toast.success(`Memory active status updated: ${updated.data?.isActive}`);
     },
     onError: (err: any) => {
       toast.error(err.message || 'Failed to update active status');

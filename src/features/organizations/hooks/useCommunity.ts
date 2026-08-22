@@ -2,14 +2,14 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { toast } from 'sonner';
 import { COLLECTIONS } from '@/lib/constants/COLLECTIONS';
-import { communitiesService } from '../services/communityService';
+import { workspacesService } from '../services/communityService';
 import type { ICommunity } from '../types';
 
 export const useOrganizationsQuery = () => {
   return useQuery({
     queryKey: [COLLECTIONS.COMMUNITIES],
     queryFn: async () => {
-      return await communitiesService.fetchOrganizations();
+      return await workspacesService.fetchOrganizations();
     },
   });
 };
@@ -19,7 +19,7 @@ export const useOrganizationsQuery = () => {
 //     queryKey: [COLLECTIONS.COMMUNITIES],
 //     queryFn: async () => {
 //       const [data] = await Promise.all([
-//         communitiesService.fetchOrganizations(),
+//         workspacesService.fetchOrganizations(),
 
 //       ]);
 //       return { data };
@@ -30,7 +30,7 @@ export const useOrganizationsQuery = () => {
 export const useCreateCommunityMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: any) => communitiesService.createCommunity(data),
+    mutationFn: (data: any) => workspacesService.createCommunity(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.COMMUNITIES] });
       queryClient.invalidateQueries({ queryKey: ['dashboard', 'stats'] });
@@ -45,7 +45,7 @@ export const useCreateCommunityMutation = () => {
 export const useDeleteCommunityMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (id: string) => communitiesService.deleteCommunity(id),
+    mutationFn: (id: string) => workspacesService.deleteCommunity(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.COMMUNITIES] });
       queryClient.invalidateQueries({ queryKey: ['dashboard', 'stats'] });
@@ -60,7 +60,7 @@ export const useDeleteCommunityMutation = () => {
 export const useCommunityQuery = (id: string) => {
   return useQuery({
     queryKey: [COLLECTIONS.COMMUNITIES, id],
-    queryFn: () => communitiesService.fetchCommunityById(id),
+    queryFn: () => workspacesService.fetchCommunityById(id),
     enabled: !!id,
   });
 };
@@ -75,7 +75,7 @@ export const useUpdateCommunityMutation = () => {
     }: {
       id: string;
       data: Partial<ICommunity>;
-    }) => communitiesService.updateCommunity(id, data),
+    }) => workspacesService.updateCommunity(id, data),
 
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({

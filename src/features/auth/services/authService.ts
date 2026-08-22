@@ -2,7 +2,7 @@ import { apiClient } from '@/lib/api/client';
 import type { IAdminUser } from '@/features/admins';
 
 interface LoginRequest {
-    email: string;
+    username: string;
     password: string;
 }
 

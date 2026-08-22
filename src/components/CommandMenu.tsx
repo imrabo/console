@@ -33,7 +33,7 @@ const navItems = [
   { label: "Users", href: "/users", icon: UsersIcon, shortcut: "G U" },
   {
     label: "Organizations",
-    href: "/communities",
+    href: "/workspaces",
     icon: HomeIcon,
     shortcut: "G V",
   },

@@ -41,7 +41,7 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 
 const routeLabels: Record<string, string> = {
   users: "Users",
-  communities: "Organizations",
+  workspaces: "Organizations",
   agents: "Agents",
   feed: "Feed",
   memorys: "Memorys",

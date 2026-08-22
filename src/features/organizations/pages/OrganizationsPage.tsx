@@ -206,14 +206,14 @@ export const OrganizationsPage: React.FC = () => {
 
             <DropdownMenuContent align="end" className="w-52">
               <DropdownMenuItem>
-                <Link to={`/admin/communities/${community.id}`}>
+                <Link to={`/admin/workspaces/${community.id}`}>
                   <Eye className="mr-2 h-4 w-4" />
                   View Details
                 </Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <Link to={`/admin/communities/${community.id}/edit`}>
+                <Link to={`/admin/workspaces/${community.id}/edit`}>
                   <Pencil className="mr-2 h-4 w-4" />
                   Edit Community
                 </Link>
@@ -222,21 +222,21 @@ export const OrganizationsPage: React.FC = () => {
               <DropdownMenuSeparator />
 
               <DropdownMenuItem>
-                <Link to={`/admin/communities/${community.id}/members`}>
+                <Link to={`/admin/workspaces/${community.id}/members`}>
                   <Users className="mr-2 h-4 w-4" />
                   Manage Members
                 </Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <Link to={`/admin/communities/${community.id}/messages`}>
+                <Link to={`/admin/workspaces/${community.id}/messages`}>
                   <MessageCircle className="mr-2 h-4 w-4" />
                   Community Chats
                 </Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <Link to={`/admin/communities/${community.id}/analytics`}>
+                <Link to={`/admin/workspaces/${community.id}/analytics`}>
                   <BarChart3 className="mr-2 h-4 w-4" />
                   Analytics
                 </Link>
@@ -265,7 +265,7 @@ export const OrganizationsPage: React.FC = () => {
   console.log("OrganizationsPage data:", data);
   console.log(data);
   console.log(columns);
-  console.log(data?.length);
+  console.log(data?.data?.length);
 
   return (
     <div className="animate-fade-in space-y-6 p-6">
@@ -276,7 +276,7 @@ export const OrganizationsPage: React.FC = () => {
             Community Network
           </h1>
           <p className="text-muted-foreground mt-1 text-sm font-medium">
-            Oversee community neighborhood hubs, verify communities data, and
+            Oversee community neighborhood hubs, verify workspaces data, and
             moderate group announcements.
           </p>
         </div>
@@ -284,7 +284,7 @@ export const OrganizationsPage: React.FC = () => {
 
       <DataTable
         columns={columns}
-        data={data ?? []}
+        data={data?.data ?? []}
         searchKey={"name"}
         enableRefresh={true}
         searchPlaceholder="Filter community groups by name..."
@@ -300,7 +300,7 @@ export const OrganizationsPage: React.FC = () => {
         // enableSearch
         // enableSorting
 
-        onRowClick={(cmty) => router(`/communities/${cmty.id}`)}
+        onRowClick={(cmty) => router(`/workspaces/${cmty.id}`)}
         toolbar={
           <Button
             onClick={() => setIsGroupOpen(true)}

@@ -27,7 +27,7 @@ export enum ThemeMode {
 }
 
 export enum EmailPreferenceType {
-  VILLAGES = 'communities',
+  VILLAGES = 'workspaces',
   MEETUPS = 'agents',
   FEED = 'feed',
   RESOURCES = 'connectors',

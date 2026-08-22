@@ -66,8 +66,8 @@ export const useUpdateUserMutation = () => {
     onSuccess: (updated) => {
       // Update detail cache
       queryClient.setQueryData(
-        [COLLECTIONS.USERS, updated.id],
-        updated
+        [COLLECTIONS.USERS, updated.data?.id],
+        updated.data
       );
 
       // Update list cache
@@ -75,11 +75,11 @@ export const useUpdateUserMutation = () => {
         [COLLECTIONS.USERS],
         (old) =>
           old?.map((user) =>
-            user.id === updated.id ? updated : user
+            user.id === updated.data?.id ? updated.data : user
           ) ?? []
       );
 
-      toast.success(`Updated details for ${updated.fullName}`);
+      toast.success(`Updated details for ${updated.data?.fullName}`);
     },
 
     onError: (err: any) => {
@@ -104,7 +104,7 @@ export const useUpdateUserStatusMutation = () => {
       queryClient.invalidateQueries({ queryKey: [COLLECTIONS.USERS] });
       queryClient.invalidateQueries({ queryKey: ['dashboard', 'stats'] });
       queryClient.invalidateQueries({ queryKey: ['auditLogs'] });
-      toast.success(`User status updated to: ${updated.status}`);
+      toast.success(`User status updated to: ${updated.data?.status}`);
     },
     onError: (err: any) => {
       toast.error(err.message || 'Failed to update user status');

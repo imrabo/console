@@ -1,25 +1,27 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import type { ColumnDef } from '@tanstack/react-table';
+import React, { useState } from "react";
+import type { ColumnDef } from "@tanstack/react-table";
 
-import { DataTable } from '@/components/tables/DataTable';
-import { Button } from '@/components/ui/button';
+import { DataTable } from "@/components/tables/DataTable";
+import { Button } from "@/components/ui/button";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 
-import { PlusCircle, MoreHorizontal } from 'lucide-react';
+import { PlusCircle, MoreHorizontal } from "lucide-react";
 
-
-import { useAdminUsersQuery, useDeleteAdminUserMutation } from '../hooks/useAdmins';
-import { Spinner } from '@/components/ui/spinner';
-import type { IAdminUser } from '../types';
-import AdminUserDialog from '../components/AdminUserDialog';
+import {
+  useAdminUsersQuery,
+  useDeleteAdminUserMutation,
+} from "../hooks/useAdmins";
+import { Spinner } from "@/components/ui/spinner";
+import type { IAdminUser } from "../types";
+import AdminUserDialog from "../components/AdminUserDialog";
 
 export const AdminUsersPage: React.FC = () => {
   const { data, isLoading } = useAdminUsersQuery();
@@ -27,7 +29,8 @@ export const AdminUsersPage: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [selectedAdmin, setSelectedAdmin] = useState<IAdminUser | null>(null);
   const handleDelete = (admin: IAdminUser) => {
-    if (window.confirm(`Delete ${admin.fullName}?`)) deleteAdminUser.mutate(admin.id);
+    if (window.confirm(`Delete ${admin.fullName}?`))
+      deleteAdminUser.mutate(admin.id);
   };
 
   const handleCreate = () => {
@@ -42,13 +45,13 @@ export const AdminUsersPage: React.FC = () => {
 
   const columns: ColumnDef<IAdminUser>[] = [
     {
-      id: 'serialNo',
-      header: 'Sr. No.',
+      id: "serialNo",
+      header: "Sr. No.",
       cell: ({ row }) => row.index + 1,
     },
     {
-      accessorKey: 'fullName',
-      header: 'Administrator',
+      accessorKey: "fullName",
+      header: "Administrator",
       cell: ({ row }) => {
         const admin = row.original;
 
@@ -62,30 +65,37 @@ export const AdminUsersPage: React.FC = () => {
     },
 
     {
-      accessorKey: 'createdAt',
-      header: 'Created',
+      accessorKey: "createdAt",
+      header: "Created",
       cell: ({ row }) => (
-        <span className="text-sm">{new Date(row.original.createdAt).toLocaleDateString()}</span>
+        <span className="text-sm">
+          {new Date(row.original.createdAt).toLocaleDateString()}
+        </span>
       ),
     },
     {
-      id: 'actions',
-      header: '',
+      id: "actions",
+      header: "",
       cell: ({ row }) => {
         const admin = row.original;
 
         return (
           <DropdownMenu>
-            <DropdownMenuTrigger >
+            <DropdownMenuTrigger>
               <Button variant="ghost" size="icon" className="h-8 w-8">
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem onClick={() => handleEdit(admin)}>Edit</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleEdit(admin)}>
+                Edit
+              </DropdownMenuItem>
 
-              <DropdownMenuItem className="text-destructive" onClick={() => handleDelete(admin)}>
+              <DropdownMenuItem
+                className="text-destructive"
+                onClick={() => handleDelete(admin)}
+              >
                 Delete
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -102,9 +112,12 @@ export const AdminUsersPage: React.FC = () => {
       {/* Title block */}
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight">Users Management</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight">
+            Users Management
+          </h1>
           <p className="text-muted-foreground mt-1 text-sm font-medium">
-            Browse registered communities, monitor system roles, and execute safety controls.
+            Browse registered workspaces, monitor system roles, and execute
+            safety controls.
           </p>
         </div>
       </div>
@@ -117,7 +130,11 @@ export const AdminUsersPage: React.FC = () => {
         searchPlaceholder="Search users by name..."
         loading={isLoading}
         onRowClick={(selectedAdmin) => (
-          <AdminUserDialog open={open} onOpenChange={setOpen} admin={selectedAdmin} />
+          <AdminUserDialog
+            open={open}
+            onOpenChange={setOpen}
+            admin={selectedAdmin}
+          />
         )}
         toolbar={
           <Button onClick={handleCreate}>
@@ -126,7 +143,11 @@ export const AdminUsersPage: React.FC = () => {
           </Button>
         }
       />
-      <AdminUserDialog open={open} onOpenChange={setOpen} admin={selectedAdmin} />
+      <AdminUserDialog
+        open={open}
+        onOpenChange={setOpen}
+        admin={selectedAdmin}
+      />
     </div>
   );
 };

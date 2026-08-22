@@ -50,9 +50,9 @@ export default function CommunityDetailsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">{community.name}</h1>
+        <h1 className="text-3xl font-bold">{community.data?.name}</h1>
 
-        <p className="text-muted-foreground">{community.description}</p>
+        <p className="text-muted-foreground">{community.data?.description}</p>
       </div>
 
       <div className="grid grid-cols-12 gap-6">
@@ -67,28 +67,28 @@ export default function CommunityDetailsPage() {
             </CardHeader>
 
             <CardContent className="grid grid-cols-2 gap-6">
-              <Info icon={<Layers />} title="Type" value={community.type} />
+              <Info icon={<Layers />} title="Type" value={community.data?.type} />
 
               <Info
                 icon={<Tag />}
                 title="Category"
-                value={community.category || "-"}
+                value={community.data?.category || "-"}
               />
 
-              <Info icon={<Shield />} title="Status" value={community.status} />
+              <Info icon={<Shield />} title="Status" value={community.data?.status} />
 
               <Info
                 icon={<Users />}
                 title="Members"
-                value={community.memberCount}
+                value={community.data?.memberCount}
               />
 
-              <Info icon={<User />} title="Owner" value={community.adminId} />
+              <Info icon={<User />} title="Owner" value={community.data?.adminId} />
 
               <Info
                 icon={<Calendar />}
                 title="Created"
-                value={community.createdAt.toString()}
+                value={community.data?.createdAt.toString()}
               />
             </CardContent>
           </Card>
@@ -102,15 +102,15 @@ export default function CommunityDetailsPage() {
               <Info
                 icon={<DollarSign />}
                 title="Access"
-                value={community.accessType}
+                value={community.data?.accessType}
               />
 
               <Info
                 icon={<DollarSign />}
                 title="Price"
                 value={
-                  community.price
-                    ? `${community.currency} ${community.price}`
+                  community.data?.price
+                    ? `${community.data?.currency} ${community.data?.price}`
                     : "Free"
                 }
               />
@@ -118,7 +118,7 @@ export default function CommunityDetailsPage() {
               <Info
                 icon={<User />}
                 title="Additional Admins"
-                value={community.adminIds?.length || 0}
+                value={community.data?.adminIds?.length || 0}
               />
             </CardContent>
           </Card>
@@ -134,7 +134,7 @@ export default function CommunityDetailsPage() {
 
             <CardContent>
               <Avatar className="h-40 w-40 rounded-xl">
-                <AvatarImage src={community.imageUrl} />
+                <AvatarImage src={community.data?.imageUrl} />
 
                 <AvatarFallback>
                   <ImageIcon />
@@ -150,13 +150,13 @@ export default function CommunityDetailsPage() {
 
             <CardContent>
               <Badge>
-                {community.visibility === "public" ? (
+                {community.data?.visibility === "public" ? (
                   <Globe className="mr-2 h-4 w-4" />
                 ) : (
                   <Lock className="mr-2 h-4 w-4" />
                 )}
 
-                {community.visibility}
+                {community.data?.visibility}
               </Badge>
             </CardContent>
           </Card>
@@ -170,7 +170,7 @@ export default function CommunityDetailsPage() {
               <div>
                 <p className="text-muted-foreground text-sm">Created By</p>
 
-                <p>{community.createdByAdminId}</p>
+                <p>{community.data?.createdByAdminId}</p>
               </div>
 
               <Separator />
@@ -178,7 +178,7 @@ export default function CommunityDetailsPage() {
               <div>
                 <p className="text-muted-foreground text-sm">Updated</p>
 
-                <p>{community.updatedAt?.toString()}</p>
+                <p>{community.data?.updatedAt?.toString()}</p>
               </div>
             </CardContent>
           </Card>

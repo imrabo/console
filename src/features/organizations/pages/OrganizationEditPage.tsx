@@ -43,13 +43,13 @@ export default function CommunityEditPage() {
     if (!community) return;
 
     setForm({
-      name: community.name,
-      description: community.description ?? "",
-      category: community.category ?? "",
-      type: community.type,
-      accessType: community.accessType,
-      visibility: community.visibility,
-      status: community.status,
+      name: community.data?.name ?? '',
+      description: community.data?.description ?? "",
+      category: community.data?.category ?? "",
+      type: community.data?.type ?? ICommunityType.Family,
+      accessType: community.data?.accessType ?? ICommunityAccessType.Free,
+      visibility: community.data?.visibility ?? ICommunityVisibility.Public,
+      status: community.data?.status ?? ICommunityStatus.Active,
     });
   }, [community]);
 
@@ -66,12 +66,12 @@ export default function CommunityEditPage() {
 
     updateCommunity.mutate(
       {
-        id: community.id,
+        id: community.data?.id ?? '',
         data: form,
       },
       {
         onSuccess() {
-          router(`/communities/${community.id}`);
+          router(`/workspaces/${community.data?.id}`);
         },
       },
     );
