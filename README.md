@@ -1,61 +1,55 @@
-## Jarvis Web Intelligence System
+# ImRabo Console
 
-Web-based AI Brain + Memory + Automation platform.
+A client-only React + TypeScript application built with Vite. This repository contains the user-facing web interface only; it does not run a Next.js server, API routes, database, Prisma client, or backend services.
 
-### Implemented MVP Scope
+## Stack
 
-- Chat AI brain interface
-- Persistent memory store
-- Tasks and goals system
-- Daily plan agent
-- Event ingestion
-- Real-time dashboard (poll-based)
+- React 19 + TypeScript
+- Vite
+- Tailwind CSS
+- MapLibre GL
+- Browser APIs for geolocation, speech synthesis, and voice input
 
-### Architecture
-
-- Brain + Memory Layer: `src/lib/jarvis`
-- Integration Layer: `src/app/api/*` (`/chat`, `/memory`, `/tasks`, `/goals`, `/events`, `/dashboard`, `/agents`)
-- Automation + Dashboard Layer: `src/app/(jarvis)/*`
-
-### AI Provider Switching
-
-Set provider in environment:
-
-`AI_PROVIDER=local` or `AI_PROVIDER=openai`
-
-Optional OpenAI-compatible settings:
-
-- `AI_API_BASE_URL`
-- `AI_API_KEY`
-- `AI_MODEL`
-
-### Run
+## Run locally
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Open `http://localhost:3000`.
+Open the local URL printed by Vite.
 
-### Notes
+## Optional API integration
 
-- Current storage uses `jarvis-store.json` for persistence in this refactor phase.
-- Legacy domain routes were pruned to keep only PRD-aligned product surfaces.
+The UI owns its loading, error, and data state. It can run without a backend using demo data. To connect an independently deployed API, set:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+VITE_API_BASE_URL=https://api.example.com
+```
 
-## Learn More
+The client currently expects these endpoints:
 
-To learn more about Next.js, take a look at the following resources:
+- `GET /api/dashboard`
+- `GET /api/agents`
+- `GET /api/tasks`
+- `GET /api/memory`
+- `GET /api/public/intelligence?lat={lat}&lng={lng}`
+- `POST /api/chat` with `{ "message": "..." }`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The API must enable CORS for the deployed console origin. Only public API origins belong in `VITE_*` variables; never put secrets or private keys in frontend environment variables.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Build
 
-## Deploy on Vercel
+```bash
+pnpm typecheck
+pnpm build
+pnpm preview
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## GitHub Pages
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The project is configured for the repository path `/console/`. The GitHub Actions workflow builds the static site and deploys the `dist/` directory to GitHub Pages.
+
+## Scope
+
+This repository is the presentation layer. Authentication, persistence, business logic, AI orchestration, secrets, and server-side integrations belong in a separately deployed backend.
