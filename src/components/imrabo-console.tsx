@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useState, type FormEvent } from "react";
 import { Mic, SendHorizontal } from "lucide-react";
 
 export function ImraboConsole({
