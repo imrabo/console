@@ -41,7 +41,7 @@ export function TablePaginationControls({
                 <PaginationContent>
                     <PaginationItem>
                         <PaginationPrevious
-                            href="#"
+                            to="#"
                             onClick={(event) => {
                                 event.preventDefault();
                                 if (!previousDisabled) {
@@ -59,7 +59,7 @@ export function TablePaginationControls({
                     </PaginationItem>
                     <PaginationItem>
                         <PaginationNext
-                            href="#"
+                            to="#"
                             onClick={(event) => {
                                 event.preventDefault();
                                 if (!nextDisabled) {
