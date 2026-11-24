@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "ES2022",
     "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
@@ -15,7 +19,23 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    "types": ["vite/client"]
+    "types": [
+      "vite/client"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
   },
-  "include": ["src/main.tsx", "src/App.tsx", "src/components/imrabo-map.tsx", "src/components/imrabo-panel.tsx", "src/components/imrabo-console.tsx", "src/components/imrabo-dock.tsx", "src/components/imrabo-scope.tsx"]
+  "include": [
+    "src/main.tsx",
+    "src/App.tsx",
+    "src/components/imrabo-map.tsx",
+    "src/components/imrabo-panel.tsx",
+    "src/components/imrabo-console.tsx",
+    "src/components/imrabo-dock.tsx",
+    "src/components/imrabo-scope.tsx"
+  ]
 }
