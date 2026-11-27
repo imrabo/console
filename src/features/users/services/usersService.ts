@@ -3,18 +3,17 @@ import type { CreateUserFormValues, EditUserFormValues } from "../schemas";
 import type { UserFilters, UserType } from "../types";
 import type { PaginatedResponse } from "@/types";
 type BackendUser = { id: number | string; name: string; email: string; phone_number?: string | null; created_at: string; updated_at?: string };
-const mapUser = (u: BackendUser): UserType => ({ id: String(u.id), fullName: u.name, email: u.email, phoneNumber: u.phone_number ?? "", membershipType: "FREE" as UserType["membershipType"], isActive: true, isExpert: false, isDeleted: false, gender: "OTHER" as UserType["gender"], dateOfBirth: new Date(0), createdAt: u.created_at });
+const mapUser = (u: BackendUser): UserType => ({ id: String(u.id), fullName: u.name, email: u.email, phoneNumber: u.phone_number ?? "", membershipType: "FREE" as UserType["membershipType"], isActive: true, isExpert: false, isDeleted: false, gender: "OTHER" as UserType["gender"], dateOfBirth: new Date(0), createdAt: new Date(u.created_at) });
 export const usersService = {
   async fetchUsers(filters?: UserFilters): Promise<PaginatedResponse<UserType>> {
     const page = filters?.page ?? 1; const limit = filters?.limit ?? 50;
     const users = await apiClient.get<BackendUser[]>("/users", { skip: (page - 1) * limit, limit });
     const data = users.map(mapUser);
-    return { data, pagination: { page, limit, total: data.length, totalPages: data.length < limit ? page : page + 1 } } as PaginatedResponse<UserType>;
+    return { data, total: data.length, page, limit, totalPages: Math.ceil(data.length / limit) };
   },
   async fetchUserById(id: string) { return mapUser(await apiClient.get<BackendUser>(`/users/${id}`)); },
   async createUser(data: CreateUserFormValues) {
-    const phone = "countryCode" in data ? `${data.countryCode}${data.phoneNumber}` : data.phoneNumber;
-    return mapUser(await apiClient.post<BackendUser>("/users", { name: data.fullName, email: data.email, phone_number: phone }));
+    return mapUser(await apiClient.post<BackendUser>("/users", { name: data.fullName, email: data.email, phone_number: `${data.countryCode}${data.phoneNumber}` }));
   },
   async updateUser(id: string, data: Partial<EditUserFormValues>) {
     const patch: Record<string, unknown> = {};
@@ -24,5 +23,6 @@ export const usersService = {
     return mapUser(await apiClient.patch<BackendUser>(`/users/${id}`, patch));
   },
   deleteUser(id: string) { return apiClient.delete<void>(`/users/${id}`); },
+  async restoreUser(_id: string): Promise<UserType> { throw new Error("User restoration is not supported by the current backend API."); },
 };
 export default usersService;
