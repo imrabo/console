@@ -1,88 +1,28 @@
-import { apiClient } from '@/lib/api/client';
-import type {
-  CreateUserFormValues,
-  EditUserFormValues,
-} from '../schemas';
-import type {
-  UserFilters,
-  UserType,
-} from '../types';
-import { PaginatedResponse } from '@/types';
-
+import { apiClient } from "@/lib/api/client";
+import type { CreateUserFormValues, EditUserFormValues } from "../schemas";
+import type { UserFilters, UserType } from "../types";
+import type { PaginatedResponse } from "@/types";
+type BackendUser = { id: number | string; name: string; email: string; phone_number?: string | null; created_at: string; updated_at?: string };
+const mapUser = (u: BackendUser): UserType => ({ id: String(u.id), fullName: u.name, email: u.email, phoneNumber: u.phone_number ?? "", membershipType: "FREE" as UserType["membershipType"], isActive: true, isExpert: false, isDeleted: false, gender: "OTHER" as UserType["gender"], dateOfBirth: new Date(0), createdAt: new Date(u.created_at) });
 export const usersService = {
-  async fetchUsers(
-    filters?: UserFilters
-  ): Promise<PaginatedResponse<UserType>> {
-    const params = new URLSearchParams();
-
-    Object.entries(filters ?? {}).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== '') {
-        params.set(key, String(value));
-      }
-    });
-
-    const query = params.toString();
-
-    return apiClient.get<PaginatedResponse<UserType>>(
-      `/users${query ? `?${query}` : ''}`
-    );
+  async fetchUsers(filters?: UserFilters): Promise<PaginatedResponse<UserType>> {
+    const page = filters?.page ?? 1; const limit = filters?.limit ?? 50;
+    const users = await apiClient.get<BackendUser[]>("/users", { skip: (page - 1) * limit, limit });
+    const data = users.map(mapUser);
+    return { data, total: data.length, page, limit, totalPages: Math.ceil(data.length / limit) };
   },
-
-  async fetchUserById(id: string) {
-    return apiClient.get<UserType>(`/users/${id}`);
-  },
-
+  async fetchUserById(id: string) { return mapUser(await apiClient.get<BackendUser>(`/users/${id}`)); },
   async createUser(data: CreateUserFormValues) {
-    return apiClient.post<UserType>('/users', data);
+    return mapUser(await apiClient.post<BackendUser>("/users", { name: data.fullName, email: data.email, phone_number: `${data.countryCode}${data.phoneNumber}` }));
   },
-
   async updateUser(id: string, data: Partial<EditUserFormValues>) {
-    return apiClient.patch<UserType>(`/users/${id}`, data);
+    const patch: Record<string, unknown> = {};
+    if (data.fullName !== undefined) patch.name = data.fullName;
+    if (data.email !== undefined) patch.email = data.email;
+    if (data.phoneNumber !== undefined) patch.phone_number = data.phoneNumber;
+    return mapUser(await apiClient.patch<BackendUser>(`/users/${id}`, patch));
   },
-
-  async deleteUser(id: string) {
-    return apiClient.delete<void>(`/users/${id}`);
-  },
-
-  async restoreUser(id: string) {
-    return apiClient.patch<UserType>(`/users/${id}/restore`, {});
-  },
-
-  async updateUserStatus(
-    id: string,
-    adminDetails: {
-      adminId: string;
-      adminName: string;
-      reason?: string;
-    }
-  ) {
-    return apiClient.patch<UserType>(`/users/${id}`, {
-      isActive: !adminDetails.reason ? false : true,
-      reason: adminDetails.reason ?? `${adminDetails.adminName} changed status`,
-    });
-  },
-
-  async updateUserPreferences(
-    id: string,
-    preferences: UserType['preferences']
-  ) {
-    return apiClient.patch<UserType>(`/users/${id}/preferences`, {
-      preferences,
-    });
-  },
-
-  async updateUserChildren(id: string, children: UserType['children']) {
-    return apiClient.patch<UserType>(`/users/${id}/children`, {
-      children,
-    });
-  },
-
-  async updateCoinBalance(id: string, amount: number, reason: string) {
-    return apiClient.patch<UserType>(`/users/${id}/coins`, {
-      amount,
-      reason,
-    });
-  },
+  deleteUser(id: string) { return apiClient.delete<void>(`/users/${id}`); },
+  async restoreUser(_id: string): Promise<UserType> { throw new Error("User restoration is not supported by the current backend API."); },
 };
-
 export default usersService;
